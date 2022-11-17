@@ -8,9 +8,9 @@
 		<version>1.0.0</version>
 	</parent>
 	<groupId>com.stackroute</groupId>
-	<artifactId>chat-service</artifactId>
+	<artifactId>email-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>chat-service</name>
+	<name>email-service</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>

@@ -27,16 +27,14 @@
         <module>api-gateway</module>
         <module>aggregator</module>
         <module>authentication-service</module>
-        <module>doctor-crud</module>
+       <module>clinic-service</module>
         <module>appointment-service</module>
         <module>patient-service</module>
-        <module>appointment-service</module>
-        <module>patient-service</module>
-        <module>doctor-crud</module>
+         <module>feedback-service</module>
         <module>payments-service</module>
-
-        <module>chat-service</module>
         <module>registration-service</module>
+        <module>chat-service</module>
+        <module>email-service</module>
     </modules>
 
     <dependencies>

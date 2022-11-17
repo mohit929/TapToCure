@@ -27,6 +27,7 @@
         <module>api-gateway</module>
         <module>aggregator</module>
         <module>appointment-service</module>
+        <module>doctor-crud</module>
 
     </modules>
 

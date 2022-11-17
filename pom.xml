@@ -30,6 +30,11 @@
         <module>doctor-crud</module>
         <module>appointment-service</module>
         <module>patient-service</module>
+        <module>appointment-service</module>
+        <module>patient-service</module>
+        <module>doctor-crud</module>
+
+        <module>chat-service</module>
 
     </modules>
 

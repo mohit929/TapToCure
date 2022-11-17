@@ -26,7 +26,6 @@
         <module>eureka-server</module>
         <module>api-gateway</module>
         <module>aggregator</module>
-        <module>email-service</module>
         <module>authentication-service</module>
         <module>doctor-crud</module>
         <module>appointment-service</module>

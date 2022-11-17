@@ -35,7 +35,7 @@
         <module>doctor-crud</module>
 
         <module>chat-service</module>
-
+        <module>registration-service</module>
     </modules>
 
     <dependencies>

@@ -29,6 +29,7 @@
         <module>appointment-service</module>
         <module>doctor-crud</module>
 
+        <module>patient-service</module>
     </modules>
 
     <dependencies>

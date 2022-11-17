@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.stackroute</groupId>
-		<artifactId>api-gateway</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<artifactId>TapToCure</artifactId>
+		<version>1.0.0</version>
+
 	</parent>
 	<groupId>com.stackroute</groupId>
-	<artifactId>email-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>TapToCure</artifactId>
+	<version>1.0.0</version>
 	<name>email-service</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

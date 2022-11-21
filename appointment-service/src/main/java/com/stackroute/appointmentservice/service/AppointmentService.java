@@ -2,6 +2,7 @@ package com.stackroute.appointmentservice.service;
 
 import com.stackroute.appointmentservice.model.Appointment;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AppointmentService {
@@ -9,7 +10,9 @@ public interface AppointmentService {
 
     Appointment updateAppointment(Appointment appointment);
 
-    Optional<Appointment> deleteAppointment(int appointmentId);
+    public Optional<Appointment> deleteAppointment(int appointmentId);
 
-    Optional<Appointment> searchAppointment(int appointmentId);
+    public Optional<Appointment> getAppointment(int appointmentId);
+
+    public List<Appointment> getAppointment();
 }

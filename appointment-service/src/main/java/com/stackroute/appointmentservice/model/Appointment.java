@@ -1,18 +1,29 @@
 package com.stackroute.appointmentservice.model;
 
-import org.apache.tomcat.jni.Time;
+import lombok.*;
 
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
-public class Appointment
-{
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity(name = "appointment_detail")
+public class Appointment {
+    @Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private int appointmentId;
-
     private String appointmentDate;
     private String appointmentTime;
-
-    // for doctor's information
-    private Clinic clinic;
-    // for patient's information
-    private Patient patient;
+    private AppointmentStatus appointmentStatus;
+    @OneToOne
+    @JoinColumn(name = "patientId")
+    private Patient patientDetails;
 }
+
+enum AppointmentStatus {
+    Available,
+    Booked
+};

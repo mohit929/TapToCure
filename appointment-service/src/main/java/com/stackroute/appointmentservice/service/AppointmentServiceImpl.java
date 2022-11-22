@@ -1,7 +1,9 @@
 package com.stackroute.appointmentservice.service;
 
 
-import com.stackroute.appointmentservice.model.*;
+import com.stackroute.appointmentservice.model.Appointment;
+import com.stackroute.appointmentservice.model.AppointmentStatus;
+import com.stackroute.appointmentservice.model.Patient;
 import com.stackroute.appointmentservice.repo.AppointmentRepo;
 import com.stackroute.appointmentservice.repo.PatientRepo;
 import org.jboss.logging.Logger;
@@ -20,33 +22,31 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     PatientRepo patientRapo;
 
-    @Autowired
     Patient existingPatient;
-    @Autowired
     Appointment existingAppointment;
 
     AppointmentServiceImpl() {
         logger = Logger.getLogger(AppointmentServiceImpl.class.getSimpleName());
-        //BasicConfigurator.configure();
     }
 
     // this method will create an appointment record in db
     // and returns the created object of appointment if created, else it returns null
     @Override
-    public Appointment bookAppointment(Appointment appointment)
-    {
-        // if patient id is not provided
-        if(appointment.getPatientDetails().getPatientId()==0)
+    public Appointment bookAppointment(Appointment appointment) {
+        // Existing Patient: ID must be provided, rest all details are optional, details will be taken from database by ID
+        if(patientRapo.existsById(appointment.getPatientDetails().getPatientId()))
         {
+            logger.info("Existing Patient");
+            existingPatient = patientRapo.getOne(appointment.getPatientDetails().getPatientId());
+        }
+        else // New Patient: All details must be provided, ID is optional
+        {
+            logger.info("New Patient");
+
             // saving patient's record in db
             // NOTE: store it before appointment otherwise it will throw exception
             patientRapo.save(appointment.getPatientDetails());
             logger.info("Inserted: Patient's record");
-        }
-        else
-        {
-            existingPatient = patientRapo.getOne(appointment.getPatientDetails().getPatientId());
-            logger.info("This Patient's record already exists");
         }
 
         // saving appointment record in db
@@ -55,58 +55,105 @@ public class AppointmentServiceImpl implements AppointmentService {
         logger.info("Inserted: Appointment record");
 
         // setting patient's detail in new empty appointment record
-        // NOTE: In future we need to change this if we have so many fields in Patient
-        //appointment.setPatientDetails(existingPatient);
-        appointment.getPatientDetails().setPatientName(existingPatient.getPatientName());
+        if(existingPatient!=null)
+        {
+            try
+            {
+                appointment.setPatientDetails((Patient) existingPatient.clone());
+            }
+            catch (CloneNotSupportedException e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+
+        existingPatient=null;
 
         // returning inserted appointment record
         return appointment;
     }
 
 
-
     // this method will update an already existing appointment record in db based on particular appointmentId
     // and returns the updated object of appointment if updated, else it returns null
-    public Appointment updateAppointment(Appointment appointment) {
-        Appointment existingAppointment = appointmentRepo.getOne(appointment.getAppointmentId());
+    public Appointment updateAppointment(Appointment appointment)
+    {
+        existingAppointment = appointmentRepo.getOne(appointment.getAppointmentId());
 
-        // checking appointment record should exist in db
-        if (existingAppointment != null) {
+        if (existingAppointment == null)
+        {
+            logger.info("Not Received: any existing Appointment record");
+            return null;
+        }
+        else
+        {
             logger.info("Received: existing Appointment record");
 
-            //existingAppointment.setAppointmentStatus(AppointmentStatus.Booked);
+            existingAppointment.setAppointmentStatus(AppointmentStatus.Booked);
             existingAppointment.setAppointmentDate(appointment.getAppointmentDate());
             existingAppointment.setAppointmentTime(appointment.getAppointmentTime());
 
-            // same patient is going to use this appointment
-            if (appointment.getPatientDetails() == null)
+            if(existingAppointment.getPatientDetails().getPatientId()
+                    == appointment.getPatientDetails().getPatientId())
             {
-                Patient existingPatient = patientRapo.getOne(existingAppointment.getPatientDetails().getPatientId());
-                // setting patient's detail in new appointment record
-                appointment.setPatientDetails(existingPatient);
+                logger.info("Same Existing Patient");
+                // getting patient data from db
+                existingPatient = patientRapo.getOne(appointment.getPatientDetails().getPatientId());
+
+                // updating local patient object using db data
+                try {
+                    appointment.setPatientDetails((Patient) existingPatient.clone());
+                } catch (CloneNotSupportedException e) {
+                    throw new RuntimeException(e);
+                }
             }
             else
             {
-                // updating patient's record in existingAppointment object
-                existingAppointment.setPatientDetails(appointment.getPatientDetails());
+                if(patientRapo.existsById(appointment.getPatientDetails().getPatientId()))
+                {
+                    logger.info("Different Existing Patient");
+                    // getting patient data from db
+                    existingPatient = patientRapo.getOne(appointment.getPatientDetails().getPatientId());
 
-                // updating patient's record in db
-                // NOTE: store it before appointment otherwise it will throw exception
-                patientRapo.save(existingAppointment.getPatientDetails());
-                logger.info("Updated: Patient's record");
+                    // copy the patient's info: from new to existing
+                    try
+                    {
+                        existingAppointment.setPatientDetails((Patient) appointment.getPatientDetails().clone());
+
+                        // updating local patient object using db data
+                        appointment.setPatientDetails((Patient)existingPatient.clone());
+
+                    } catch (CloneNotSupportedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else
+                {
+                    logger.info("Different New Patient");
+
+                    // saving patient's record in db
+                    // NOTE: store it before appointment otherwise it will throw exception
+                    patientRapo.save(appointment.getPatientDetails());
+
+                    // copy the patient's info: from new to existing
+                    try
+                    {
+                        existingAppointment.setPatientDetails((Patient) appointment.getPatientDetails().clone());
+                    } catch (CloneNotSupportedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    logger.info("Updated: Patient's record in appointment");
+                }
             }
 
             // updating existingAppointment record in db
             appointmentRepo.save(existingAppointment);
             logger.info("Updated: existingAppointment record");
 
-            // returning updated appointment record
+            existingAppointment=null;
+            existingPatient=null;
+
             return appointment;
-        }
-        else
-        {
-            logger.info("Not Received: any existing Appointment record");
-            return null;
         }
     }
 

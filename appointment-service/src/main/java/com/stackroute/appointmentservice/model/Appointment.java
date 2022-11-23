@@ -1,29 +1,25 @@
 package com.stackroute.appointmentservice.model;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-
+import javax.persistence.*;
+@Component
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity(name = "appointment_detail")
-public class Appointment {
+public class Appointment
+{
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int appointmentId;
     private String appointmentDate;
     private String appointmentTime;
-    private AppointmentStatus appointmentStatus;
+    // enum reference: for custom status values
+    private AppointmentStatus appointmentStatus = AppointmentStatus.Available;
     @OneToOne
-    @JoinColumn(name = "patientId")
+    @JoinColumn(name = "patientId") // name= "primary key of second table"
     private Patient patientDetails;
 }
 
-enum AppointmentStatus {
-    Available,
-    Booked
-};

@@ -18,6 +18,7 @@ public class Appointment
     private String appointmentTime;
     // enum reference: for custom status values
     private AppointmentStatus appointmentStatus = AppointmentStatus.Available;
+
     @OneToOne
     @JoinColumn(name = "patientId") // name= "primary key of second table"
     private Patient patientDetails;

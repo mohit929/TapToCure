@@ -34,12 +34,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment bookAppointment(Appointment appointment) {
         // Existing Patient: ID must be provided, rest all details are optional, details will be taken from database by ID
-        if(patientRapo.existsById(appointment.getPatientDetails().getPatientId()))
-        {
+        if (patientRapo.existsById(appointment.getPatientDetails().getPatientId())) {
             logger.info("Existing Patient");
             existingPatient = patientRapo.getOne(appointment.getPatientDetails().getPatientId());
-        }
-        else // New Patient: All details must be provided, ID is optional
+        } else // New Patient: All details must be provided, ID is optional
         {
             logger.info("New Patient");
 
@@ -55,19 +53,15 @@ public class AppointmentServiceImpl implements AppointmentService {
         logger.info("Inserted: Appointment record");
 
         // setting patient's detail in new empty appointment record
-        if(existingPatient!=null)
-        {
-            try
-            {
+        if (existingPatient != null) {
+            try {
                 appointment.setPatientDetails((Patient) existingPatient.clone());
-            }
-            catch (CloneNotSupportedException e)
-            {
+            } catch (CloneNotSupportedException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        existingPatient=null;
+        existingPatient = null;
 
         // returning inserted appointment record
         return appointment;
@@ -76,26 +70,20 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     // this method will update an already existing appointment record in db based on particular appointmentId
     // and returns the updated object of appointment if updated, else it returns null
-    public Appointment updateAppointment(Appointment appointment)
-    {
+    public Appointment updateAppointment(Appointment appointment) {
         existingAppointment = appointmentRepo.getOne(appointment.getAppointmentId());
 
-        if (existingAppointment == null)
-        {
+        if (existingAppointment == null) {
             logger.info("Not Received: any existing Appointment record");
             return null;
-        }
-        else
-        {
+        } else {
             logger.info("Received: existing Appointment record");
 
             existingAppointment.setAppointmentStatus(AppointmentStatus.Booked);
             existingAppointment.setAppointmentDate(appointment.getAppointmentDate());
             existingAppointment.setAppointmentTime(appointment.getAppointmentTime());
 
-            if(existingAppointment.getPatientDetails().getPatientId()
-                    == appointment.getPatientDetails().getPatientId())
-            {
+            if (existingAppointment.getPatientDetails().getPatientId() == appointment.getPatientDetails().getPatientId()) {
                 logger.info("Same Existing Patient");
                 // getting patient data from db
                 existingPatient = patientRapo.getOne(appointment.getPatientDetails().getPatientId());
@@ -106,29 +94,23 @@ public class AppointmentServiceImpl implements AppointmentService {
                 } catch (CloneNotSupportedException e) {
                     throw new RuntimeException(e);
                 }
-            }
-            else
-            {
-                if(patientRapo.existsById(appointment.getPatientDetails().getPatientId()))
-                {
+            } else {
+                if (patientRapo.existsById(appointment.getPatientDetails().getPatientId())) {
                     logger.info("Different Existing Patient");
                     // getting patient data from db
                     existingPatient = patientRapo.getOne(appointment.getPatientDetails().getPatientId());
 
                     // copy the patient's info: from new to existing
-                    try
-                    {
+                    try {
                         existingAppointment.setPatientDetails((Patient) appointment.getPatientDetails().clone());
 
                         // updating local patient object using db data
-                        appointment.setPatientDetails((Patient)existingPatient.clone());
+                        appointment.setPatientDetails((Patient) existingPatient.clone());
 
                     } catch (CloneNotSupportedException e) {
                         throw new RuntimeException(e);
                     }
-                }
-                else
-                {
+                } else {
                     logger.info("Different New Patient");
 
                     // saving patient's record in db
@@ -136,8 +118,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                     patientRapo.save(appointment.getPatientDetails());
 
                     // copy the patient's info: from new to existing
-                    try
-                    {
+                    try {
                         existingAppointment.setPatientDetails((Patient) appointment.getPatientDetails().clone());
                     } catch (CloneNotSupportedException e) {
                         throw new RuntimeException(e);
@@ -150,8 +131,8 @@ public class AppointmentServiceImpl implements AppointmentService {
             appointmentRepo.save(existingAppointment);
             logger.info("Updated: existingAppointment record");
 
-            existingAppointment=null;
-            existingPatient=null;
+            existingAppointment = null;
+            existingPatient = null;
 
             return appointment;
         }
@@ -160,9 +141,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     // this method will delete an existing appointment record in db based on particular appointmentId
     // and returns the deleted object of appointment if deleted, else it returns null
     @Override
-    public Optional<Appointment> deleteAppointment(int appointmentId) {
+    public Appointment deleteAppointment(int appointmentId) {
+
         // Storing the data of appointment record before deleting it from db
-        Optional<Appointment> appointment = getAppointment(appointmentId);
+        Appointment appointment = getAppointment(appointmentId);
 
         if (appointment != null) {
             // deleting appointment record from db
@@ -176,8 +158,14 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     // this method will search an existing appointment record in db based on particular appointmentId
     // and returns the object of appointment if found, else it returns null
-    public Optional<Appointment> getAppointment(int appointmentId) {
-        return appointmentRepo.findById(appointmentId);
+    public Appointment getAppointment(int appointmentId)
+    {
+        existingAppointment = appointmentRepo.findById(appointmentId).get();
+
+        if(existingAppointment!=null)
+            return existingAppointment;
+        else
+            return null;
     }
 
     // this method will get all existing appointment record from db

@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Entity(name = "patient_detail")
 public class Patient implements Cloneable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int patientId;
     private String patientName;
 

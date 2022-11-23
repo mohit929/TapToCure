@@ -29,10 +29,10 @@ public class DoctorService {
         return doctorDetailOptional;
     }
 
-  /*  public Optional<DoctorDetail> getDoctorByName(String name) {
-        Optional<DoctorDetail> doctorDetailList1 = repository.findByName(name);
+    public Optional<DoctorDetail> getDoctorByName(String name) {
+        Optional<DoctorDetail> doctorDetailList1 = repository.findByDoctorName(name);
 
 
    return doctorDetailList1;
-    }*/
+    }
 }

@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface doctorRepository extends MongoRepository<DoctorDetail,Integer> {
 
-    /*Optional<DoctorDetail> findByName(String name);*/
+    Optional<DoctorDetail> findByDoctorName(String name);
 }

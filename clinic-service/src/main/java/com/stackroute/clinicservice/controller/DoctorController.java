@@ -29,10 +29,10 @@ public class DoctorController {
         return service.searchDoctor(doctorId);
     }
 
-    /*@GetMapping("/getDoctorDetailByName/{name}")
-    public Optional<DoctorDetail> findDoctorByName(@PathVariable String name){
+    @GetMapping("/getDoctorDetailByName/{name}")
+    public Optional<DoctorDetail> findByDoctorName(@PathVariable String name){
         return service.getDoctorByName(name);
-    }*/
+    }
 
 
 

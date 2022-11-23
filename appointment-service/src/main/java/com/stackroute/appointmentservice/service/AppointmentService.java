@@ -10,9 +10,9 @@ public interface AppointmentService {
 
     Appointment updateAppointment(Appointment appointment);
 
-    public Optional<Appointment> deleteAppointment(int appointmentId);
+    public Appointment deleteAppointment(int appointmentId);
 
-    public Optional<Appointment> getAppointment(int appointmentId);
+    public Appointment getAppointment(int appointmentId);
 
     public List<Appointment> getAppointment();
 }

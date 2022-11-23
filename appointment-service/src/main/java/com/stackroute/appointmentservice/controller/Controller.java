@@ -40,7 +40,7 @@ public class Controller
     // this method will delete an existing appointment record in db based on particular appointmentId
     // and returns the deleted object of appointment if deleted, else it returns null
     @DeleteMapping("/appointment/{appointmentId}")
-    public Optional<Appointment> deleteAppointment(@PathVariable int appointmentId)
+    public Appointment deleteAppointment(@PathVariable int appointmentId)
     {
         return appointmentService.deleteAppointment(appointmentId);
     }
@@ -48,7 +48,7 @@ public class Controller
     // this method will search an existing appointment record in db based on particular appointmentId
     // and returns the object of appointment if found, else it returns null
     @GetMapping("/appointment/{appointmentId}")
-    public Optional<Appointment> getAppointment(@PathVariable int appointmentId)
+    public Appointment getAppointment(@PathVariable int appointmentId)
     {
         return appointmentService.getAppointment(appointmentId);
     }

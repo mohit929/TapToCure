@@ -1,18 +1,18 @@
 package com.stackroute.appointmentservice.service;
 
+import com.stackroute.appointmentservice.exception.AppointmentNotFoundException;
 import com.stackroute.appointmentservice.model.Appointment;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AppointmentService {
+    public List<Appointment> getAppointment() throws AppointmentNotFoundException, Exception;
+
+    public Appointment getAppointment(int appointmentId) throws AppointmentNotFoundException, Exception;
+
+    public Appointment deleteAppointment(int appointmentId) throws AppointmentNotFoundException, Exception;
+
     Appointment bookAppointment(Appointment appointment);
 
-    Appointment updateAppointment(Appointment appointment);
-
-    public Optional<Appointment> deleteAppointment(int appointmentId);
-
-    public Optional<Appointment> getAppointment(int appointmentId);
-
-    public List<Appointment> getAppointment();
+    Appointment updateAppointment(Appointment appointment) throws Exception;
 }

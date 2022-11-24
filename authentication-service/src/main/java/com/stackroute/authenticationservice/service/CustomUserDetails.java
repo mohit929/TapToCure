@@ -1,6 +1,7 @@
 package com.stackroute.authenticationservice.service;
 
 import com.stackroute.authenticationservice.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+@Slf4j
 public class CustomUserDetails implements UserDetails {
     private User user;
 
@@ -22,6 +23,7 @@ public class CustomUserDetails implements UserDetails {
         SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(user.getRole());
         List<SimpleGrantedAuthority>authorities=new ArrayList<>();
         authorities.add(simpleGrantedAuthority);
+        log.info("Inside the method of CustomUserDetails authorities to print authority");
         System.out.println(authorities);
         return authorities;
     }
@@ -33,7 +35,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getPassword();
+        return user.getUsername();
     }
 
     @Override

@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AppointmentServiceApplication {
 
     static Logger logger;
-    public static void main(String[] args)
-    {
+
+    public static void main(String[] args) {
         SpringApplication.run(AppointmentServiceApplication.class, args);
 
         logger = Logger.getLogger(AppointmentServiceApplication.class.getSimpleName());

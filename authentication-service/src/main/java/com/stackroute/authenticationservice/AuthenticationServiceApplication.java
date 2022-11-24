@@ -18,8 +18,8 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		User user=userRepository.findByUserName("mohit");
-		System.out.println(user);
+//		User user=userRepository.findByUserName("mohit");
+//		System.out.println(user);
 
 	}
 }

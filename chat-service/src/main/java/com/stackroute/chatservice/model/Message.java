@@ -8,7 +8,7 @@ public class Message {
 	private String content;
 	
 	public Message(String name, String content) {
-		super();
+		//super();
 		this.name = name;
 		this.content = content;
 	}
@@ -18,14 +18,17 @@ public class Message {
 	}
 
 	public void setName(String name) {
+
 		this.name = name;
 	}
 
 	public String getContent() {
+
 		return content;
 	}
 
 	public void setContent(String content) {
+
 		this.content = content;
 	}
 

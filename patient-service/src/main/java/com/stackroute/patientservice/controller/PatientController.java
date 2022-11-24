@@ -25,8 +25,9 @@ public class PatientController {
                 return service.registerPatient(patient);
             }
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            return e.getMessage();
         }
+
         return null;
     }
 
@@ -47,8 +48,9 @@ public class PatientController {
     }
 
     @DeleteMapping("/deletePatient/{patientId}")
-    public String deletePatient(@PathVariable String patientId){
-        return service.deletePatient(patientId);
+    public String removePatient(@PathVariable String patientId){
+        System.out.println(patientId);
+        return service.deletePatient(patientId+"");
     }
 
 }

@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 
 @Document(collection = "patient_details")
@@ -18,6 +15,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @ToString
 public class Patient {
+    @Id
     @Field("_id")
     private String patientId;
     @Field("patient_name")

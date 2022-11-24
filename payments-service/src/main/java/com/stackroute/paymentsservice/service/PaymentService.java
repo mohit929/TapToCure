@@ -4,6 +4,6 @@ import com.razorpay.Order;
 
 public interface PaymentService {
 	
-	public void SavePaymentDetails(Order order);
+	public String SavePaymentDetails(Order order);
 
 }

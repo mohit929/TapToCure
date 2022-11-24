@@ -26,37 +26,38 @@ public class PaymentRestController {
 	
 	
 	@GetMapping("/createOrderId/{amount}/{reciptid}")
-	public ModelAndView createPaymentOrder(@PathVariable String amount ,@PathVariable String reciptid, ModelMap model) {
+	public String createPaymentOrder(@PathVariable String amount ,@PathVariable String reciptid, ModelMap model) {
 	    String orderId=null;
 	    ModelAndView mav =null;
-	 
+		String result=null;
+
 	    try {
 	        int amt=Integer.parseInt(amount);
-	        
+
 	        RazorpayClient razorpay = new RazorpayClient(env.getProperty("rzp_key_id"), env.getProperty("rzp_key_secret"));
 	        JSONObject orderRequest = new JSONObject();
-	      
-	        orderRequest.put("amount", amt*100); // amount in the smallest currency 
+
+	        orderRequest.put("amount", amt*100); // amount in the smallest currency
 	        orderRequest.put("currency", env.getProperty("rzp_currency"));
 	        orderRequest.put("receipt", reciptid);
 
 	        Order order = razorpay.orders.create(orderRequest);
-	      
+
 	        orderId = order.get("id");
-	       
+
 	         model.addAttribute("orderid", orderId) ;
 
-			paymentService.SavePaymentDetails(order);
-		 
-		         
-		         mav = new ModelAndView("checkout");  
-	           
+		result=paymentService.SavePaymentDetails(order);
+
+
+		         mav = new ModelAndView("checkout");
+
 	    } catch (RazorpayException e) {
-	        
+
 	        System.out.println(e.getMessage());
 	    }
-	    return mav;
+	    return result;
 	}
-	
+
 
 }

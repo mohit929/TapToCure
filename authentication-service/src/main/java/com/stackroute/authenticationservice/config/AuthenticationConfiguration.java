@@ -33,7 +33,7 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().disable().authorizeRequests().antMatchers("/generateToken").permitAll()
+        http.csrf().disable().cors().disable().authorizeRequests().antMatchers("/generateToken","/exception").permitAll()
                 .anyRequest().authenticated().and().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

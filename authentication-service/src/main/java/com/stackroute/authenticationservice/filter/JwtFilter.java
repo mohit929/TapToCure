@@ -24,7 +24,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     JwtUtil jwtUtil;
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException{
         String authString= httpServletRequest.getHeader("Authorization");
         String username=null;
         String jwtToken=null;
@@ -32,14 +32,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if(authString!=null&& authString.startsWith("Bearer "))
         {
             jwtToken=authString.substring(7);
-            try {
-                username=jwtUtil.extractUsername(jwtToken);
-
-            }
-            catch(Exception exception)
-            {
-
-            }
+            username=jwtUtil.extractUsername(jwtToken);
             System.out.println("JWTFilter class:"+username);
             UserDetails details=customUserDetailsService.loadUserByUsername(username);
             if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null)
@@ -53,9 +46,9 @@ public class JwtFilter extends OncePerRequestFilter {
             {
                 System.out.println("Token is not validated");
             }
-
         }
         filterChain.doFilter(httpServletRequest,httpServletResponse);
+
 
     }
 }

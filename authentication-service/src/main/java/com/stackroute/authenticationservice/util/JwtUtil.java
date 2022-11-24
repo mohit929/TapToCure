@@ -1,5 +1,6 @@
 package com.stackroute.authenticationservice.util;
 
+import com.stackroute.authenticationservice.model.AuthenticationRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import java.util.Date;
@@ -40,10 +41,15 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, AuthenticationRequest authenticationRequest) throws Exception {
         log.info("Inside the method generateToken of JwtUtil");
+        if(userDetails.getUsername().equalsIgnoreCase(authenticationRequest.getEmail())&&userDetails.getPassword().equalsIgnoreCase(authenticationRequest.getPassword()))
+        {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername());
+        return createToken(claims, userDetails.getUsername());}
+        else {
+            throw new Exception("Credentials are not correct");
+        }
     }
 
     private String createToken(Map<String, Object> claims, String subject) {

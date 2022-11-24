@@ -17,9 +17,14 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+//		User user=new User();
+//		user.setUsername("Mohit Suryawanshi");
+//		user.setEmail("mohit929surya1c@gmail.com");
+//		user.setPassword("7477008050");
+//		user.setRole("doctor");
+//		userRepository.save(user);
+//
 
-//		User user=userRepository.findByUserName("mohit");
-//		System.out.println(user);
 
 	}
 }

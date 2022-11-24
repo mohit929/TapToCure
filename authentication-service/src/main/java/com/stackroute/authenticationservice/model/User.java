@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -26,4 +23,6 @@ public class User {
     private String password;
     @Column(name="user_role")
     private String role;
+    @Column(name="user_email")
+    private String email;
 }

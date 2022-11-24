@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 // repository: to perform crud operations on Appointment object
 @Repository
 public interface AppointmentRepo extends JpaRepository<Appointment, Integer> {
+
 }

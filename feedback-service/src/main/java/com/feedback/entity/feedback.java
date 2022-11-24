@@ -11,8 +11,8 @@ import lombok.Setter;
 @Document(collection = "feedbacks")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class feedback {
 	
 	@Id

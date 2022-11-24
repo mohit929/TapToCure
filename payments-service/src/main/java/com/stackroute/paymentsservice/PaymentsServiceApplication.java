@@ -8,6 +8,8 @@ public class PaymentsServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PaymentsServiceApplication.class, args);
+
+		System.out.println("hello@@@@");
 	}
 
 }

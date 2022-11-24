@@ -54,7 +54,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     // and returns the updated object of appointment if updated, else it returns null
     public Appointment updateAppointment(Appointment appointment)
     {
-        // checking appointment record should exist in db
+        // checking appointment recordg should exist in db
         if (appointmentRepo.existsById(appointment.getAppointmentId()))
         {
             // saving/updating patient's record in db

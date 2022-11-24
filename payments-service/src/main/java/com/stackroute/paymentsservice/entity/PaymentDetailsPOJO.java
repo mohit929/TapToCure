@@ -20,5 +20,6 @@ public class PaymentDetailsPOJO {
     private int  amount;
     private String currency;
     private String receiptNumber;
+    private String status;
 
 }

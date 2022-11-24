@@ -33,7 +33,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     if found it will return the list of appointment
     else throw AppointmentNotFoundException exception
      */
-    public List<Appointment> getAppointment() throws AppointmentNotFoundException, Exception
+    public List<Appointment> getAppointment() throws AppointmentNotFoundException
     {
         List<Appointment> appointmentList = appointmentRepo.findAll();
         if (!appointmentList.isEmpty()) {
@@ -47,7 +47,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     if found it will return the object of appointment
     else throw AppointmentNotFoundException exception
      */
-    public Appointment getAppointment(int appointmentId) throws AppointmentNotFoundException, Exception
+    public Appointment getAppointment(int appointmentId) throws AppointmentNotFoundException
     {
         Optional<Appointment> optionalAppointment = appointmentRepo.findById(appointmentId);
         if (optionalAppointment.isPresent()) {
@@ -63,7 +63,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     else throw AppointmentNotFoundException exception
      */
     @Override
-    public Appointment deleteAppointment(int appointmentId) throws AppointmentNotFoundException, Exception
+    public Appointment deleteAppointment(int appointmentId) throws AppointmentNotFoundException
     {
         existingAppointment = null;
         // Storing the data of appointment record before deleting it from db
@@ -98,7 +98,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             }
             catch (CloneNotSupportedException e)
             {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
         else
@@ -109,7 +109,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
 
         // saving appointment record in db
-        appointment.setAppointmentStatus(AppointmentStatus.Booked);
+        appointment.setAppointmentStatus(AppointmentStatus.BOOKED);
         appointmentRepo.save(appointment);
         logger.info("Inserted: Appointment record");
 
@@ -122,7 +122,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     if found it saves the existing appointment record from db
              it updates the fields of existing appointment and save it on db
      */
-    public Appointment updateAppointment(Appointment modifiedAppointment) throws Exception {
+    public Appointment updateAppointment(Appointment modifiedAppointment) throws AppointmentNotFoundException {
         existingAppointment = null;
         existingPatient = null;
         // search for existing appointment in db
@@ -135,7 +135,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             logger.info("Received: existing Appointment record, Starting update");
 
             // updating fields of existing appointment by the fields of modified appointment
-            existingAppointment.setAppointmentStatus(AppointmentStatus.Booked);
+            existingAppointment.setAppointmentStatus(AppointmentStatus.BOOKED);
             existingAppointment.setAppointmentDate(modifiedAppointment.getAppointmentDate());
             existingAppointment.setAppointmentTime(modifiedAppointment.getAppointmentTime());
 
@@ -159,7 +159,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 try {   // updating the patient in modified appointment by db record of original patient
                     existingAppointment.setPatientDetails((Patient) existingPatient.clone());
                 } catch (CloneNotSupportedException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
             else
@@ -170,7 +170,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 try {   // updating the patient in existing appointment by modified patient
                     existingAppointment.setPatientDetails((Patient) modifiedPatient.clone());
                 } catch (CloneNotSupportedException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
                 logger.info("Updated: Patient's record in appointment");
             }

@@ -1,11 +1,11 @@
 package com.stackroute.appointmentservice.controller;
 
-import com.stackroute.appointmentservice.exception.AppointmentNotFoundException;
 import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,12 +26,10 @@ public class Controller {
     public List<Appointment> getAppointment() {
         try {
             return appointmentService.getAppointment();
-        } catch (AppointmentNotFoundException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     // this method will search an existing appointment record in db based on particular appointmentId
@@ -40,8 +38,6 @@ public class Controller {
     public Appointment getAppointment(@PathVariable int appointmentId) {
         try {
             return appointmentService.getAppointment(appointmentId);
-        } catch (AppointmentNotFoundException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,8 +50,6 @@ public class Controller {
     public Appointment deleteAppointment(@PathVariable int appointmentId) {
         try {
             return appointmentService.deleteAppointment(appointmentId);
-        } catch (AppointmentNotFoundException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

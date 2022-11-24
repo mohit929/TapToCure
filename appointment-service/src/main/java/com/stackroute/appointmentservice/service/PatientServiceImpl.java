@@ -11,6 +11,11 @@ public class PatientServiceImpl implements PatientService {
     PatientRepo patientRapo;
 
     @Override
+    public Patient addPatient(Patient patient) {
+        return patientRapo.save(patient);
+    }
+
+    @Override
     public boolean isPatientExists(Patient patient) {
         return patientRapo.existsById(patient.getPatientId());
     }
@@ -20,8 +25,5 @@ public class PatientServiceImpl implements PatientService {
         return patientRapo.getOne(patientId);
     }
 
-    @Override
-    public Patient addPatient(Patient patient) {
-        return patientRapo.save(patient);
-    }
+
 }

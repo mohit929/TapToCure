@@ -21,7 +21,14 @@ public class Patient implements Cloneable {
     private int patientId;
     private String patientName;
 
-//    private String patientGender;
+    public Patient(int patientId) {
+        this.patientId = patientId;
+    }
+    public Patient(String patientName) {
+        this.patientName = patientName;
+    }
+
+    //    private String patientGender;
 //    private String patientBloodGroup;
 //    private Date patientDob;
 //    private String patientPhoneNumber;

@@ -26,7 +26,12 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public boolean validateEmail(String email) throws Exception {
+    public List<Patient> getAllPatientDetails(){
+        return repository.findAll();
+    }
+
+    @Override
+    public boolean isEmailExists(String email) throws Exception {
         List<Patient> patientList = repository.findAll();
         for (Patient tempPatient : patientList) {
             if (tempPatient.getPatientEmail().equals(email)) {
@@ -38,7 +43,6 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    //need to look on
     public Patient updatePatientDetails(Patient patient) {
         Patient tempPatient = repository.findById(patient.getPatientId()).get();
 
@@ -60,7 +64,6 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    // need to look on
     public String deletePatient(String patientId) {
         repository.deleteById(patientId);
         return "Patient record deleted successfully having id : " + patientId;

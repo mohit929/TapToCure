@@ -4,6 +4,8 @@ import com.stackroute.patientservice.model.Patient;
 import com.stackroute.patientservice.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,7 +23,7 @@ public class PatientController {
     @PostMapping("/registerPatient")
     public String registerPatient(@RequestBody Patient patient){
         try{
-            if(service.validateEmail(patient.getPatientEmail())){
+            if(service.isEmailExists(patient.getPatientEmail())){
                 return service.registerPatient(patient);
             }
         }catch (Exception e){
@@ -34,9 +36,8 @@ public class PatientController {
     @PostMapping("/updatePatientDetails")
     public Patient updatePatientDetails(@RequestBody Patient patient){
         try{
-            service.validateEmail(patient.getPatientEmail());
+            service.isEmailExists(patient.getPatientEmail());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return service.updatePatientDetails(patient);
         }
         return null;
@@ -47,10 +48,14 @@ public class PatientController {
         return service.getPatientDetails(patientId);
     }
 
+    @GetMapping("/getAllPatientDetails")
+    public List<Patient> getAllPatientDetails(){
+        return service.getAllPatientDetails();
+    }
+
     @DeleteMapping("/deletePatient/{patientId}")
     public String removePatient(@PathVariable String patientId){
-        System.out.println(patientId);
-        return service.deletePatient(patientId+"");
+        return service.deletePatient(patientId);
     }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -21,8 +22,14 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Optional<Patient> getPatientDetails(String patientId) {
-        return repository.findById(patientId);
+    public Optional<Patient> getPatientDetails(String patientId) throws Exception {
+        Optional<Patient> patient;
+        try{
+            patient = repository.findById(patientId);
+        }catch(Exception e){
+            throw new Exception("Patient record not found!!");
+        }
+        return patient;
     }
 
     @Override
@@ -65,7 +72,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public String deletePatient(String patientId) {
-        repository.deleteById(patientId);
-        return "Patient record deleted successfully having id : " + patientId;
+        try{
+            if(repository.findById(patientId).get() != null){
+                repository.deleteById(patientId);
+                return "Patient record deleted successfully having id : " + patientId;
+            }
+        }catch(NoSuchElementException e) {
+            throw new NoSuchElementException("Patient record not found!!");
+        }
+        return null;
     }
 }

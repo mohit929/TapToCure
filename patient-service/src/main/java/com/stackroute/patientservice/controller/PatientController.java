@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -44,8 +45,8 @@ public class PatientController {
     }
 
     @GetMapping("/getPatientDetails/{patientId}")
-    public Optional<Patient> getPatientDetails(@PathVariable String patientId){
-        return service.getPatientDetails(patientId);
+    public Optional<Patient> getPatientDetails(@PathVariable String patientId) throws Exception {
+           return service.getPatientDetails(patientId);
     }
 
     @GetMapping("/getAllPatientDetails")
@@ -55,7 +56,11 @@ public class PatientController {
 
     @DeleteMapping("/deletePatient/{patientId}")
     public String removePatient(@PathVariable String patientId){
-        return service.deletePatient(patientId);
+        try{
+            return service.deletePatient(patientId);
+        }catch(NoSuchElementException e){
+            return e.getMessage();
+        }
     }
 
 }

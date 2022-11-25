@@ -1,7 +1,7 @@
 package com.stackroute.paymentsservice.service;
 
 import com.stackroute.paymentsservice.entity.PaymentDetailsPOJO;
-import com.stackroute.paymentsservice.repositry.PaymentRepositry;
+import com.stackroute.paymentsservice.contoller.repositry.PaymentRepositry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.razorpay.Order;
@@ -17,7 +17,6 @@ public class PaymentServiceImpl implements PaymentService {
     public String SavePaymentDetails(Order order) {
         PaymentDetailsPOJO p = new PaymentDetailsPOJO();
         p.setRazorOrderId(order.get("id"));
-
         p.setAmount(order.get("amount"));
         p.setCurrency(order.get("currency"));
         p.setReceiptNumber(order.get("receipt"));

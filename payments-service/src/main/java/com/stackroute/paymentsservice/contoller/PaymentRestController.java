@@ -1,7 +1,5 @@
 package com.stackroute.paymentsservice.contoller;
 
-import com.stackroute.paymentsservice.entity.PaymentDetailsPOJO;
-import com.stackroute.paymentsservice.repositry.PaymentRepositry;
 import com.stackroute.paymentsservice.service.PaymentService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ public class PaymentRestController {
 	
 	
 	@GetMapping("/createOrderId/{amount}/{reciptid}")
-	public String createPaymentOrder(@PathVariable String amount ,@PathVariable String reciptid, ModelMap model) {
+	public  String createPaymentOrder(@PathVariable String amount ,@PathVariable String reciptid, ModelMap model) {
 	    String orderId=null;
 	    ModelAndView mav =null;
 		String result=null;

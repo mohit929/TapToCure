@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 // repository: to perform crud operations on Patient object
 @Repository
-public interface PatientRepo extends JpaRepository<Patient, Integer> {
+public interface PatientRepo  extends JpaRepository<Patient, Integer> {
 }

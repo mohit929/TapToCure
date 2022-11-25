@@ -14,12 +14,17 @@ import javax.persistence.*;
 @Entity(name = "appointment_detail")
 public class Appointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int appointmentId;
     private String appointmentDate;
     private String appointmentTime;
     // enum reference: for custom status values
     private AppointmentStatus appointmentStatus = AppointmentStatus.AVAILABLE;
+
+    public Appointment(int appointmentId,Patient patient) {
+        this.appointmentId = appointmentId;
+        this.patientDetails=patient;
+    }
 
     @OneToOne
     @JoinColumn(name = "patientId") // name= "primary key of second table"

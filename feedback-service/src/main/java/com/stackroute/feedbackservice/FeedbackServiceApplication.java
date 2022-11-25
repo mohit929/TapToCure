@@ -1,13 +1,13 @@
-package com.feedback;
+package com.stackroute.feedbackservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class feedbackconfiApplication {
+public class FeedbackServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(feedbackconfiApplication.class, args);
+		SpringApplication.run(FeedbackServiceApplication.class, args);
 	}
 
 }

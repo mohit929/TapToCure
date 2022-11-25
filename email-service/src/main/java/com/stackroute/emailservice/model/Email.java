@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Email {
- private String to;
+ private String recipient;
  private String subject;
  private String message;
 

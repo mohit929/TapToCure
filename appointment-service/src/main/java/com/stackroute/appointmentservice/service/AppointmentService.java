@@ -1,26 +1,18 @@
 package com.stackroute.appointmentservice.service;
 
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyBookedException;
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyCancelledException;
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyExistsException;
-import com.stackroute.appointmentservice.exception.AppointmentNotExistsException;
 import com.stackroute.appointmentservice.model.Appointment;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AppointmentService {
+    Appointment bookAppointment(Appointment appointment);
 
-    public Appointment createAppointment(Appointment appointment) throws AppointmentAlreadyExistsException;
+    Appointment updateAppointment(Appointment appointment);
 
-    public Appointment bookAppointment(Appointment appointment) throws AppointmentNotExistsException, AppointmentAlreadyBookedException;
+    public Optional<Appointment> deleteAppointment(int appointmentId);
 
-    public Appointment updateAppointment(Appointment appointment) throws AppointmentNotExistsException, AppointmentAlreadyCancelledException;
+    public Optional<Appointment> getAppointment(int appointmentId);
 
-    public Appointment cancelAppointment(int appointmentId) throws AppointmentNotExistsException, AppointmentAlreadyCancelledException;
-
-    public Appointment deleteAppointment(int appointmentId) throws AppointmentNotExistsException;
-
-    public List<Appointment> getAppointment() throws AppointmentNotExistsException;
-
-    public Appointment getAppointment(int appointmentId) throws AppointmentNotExistsException;
+    public List<Appointment> getAppointment();
 }

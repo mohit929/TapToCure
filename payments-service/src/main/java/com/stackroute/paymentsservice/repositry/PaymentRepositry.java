@@ -1,4 +1,4 @@
-package com.stackroute.paymentsservice.contoller.repositry;
+package com.stackroute.paymentsservice.repositry;
 
 import com.stackroute.paymentsservice.entity.PaymentDetailsPOJO;
 import org.springframework.data.jpa.repository.JpaRepository;

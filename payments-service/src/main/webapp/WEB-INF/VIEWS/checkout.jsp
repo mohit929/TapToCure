@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>TaptoCure/Payment</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <button id="rzp-button1"><h2>CLICK HERE FOR PAYMENT PROCESS</h2></button>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 var options = {
-    "key": "rzp_test_akArRL3ZRpmWSk", // Enter the Key ID generated from the Dashboard
-    
+    "key": "rzp_test_y8GUxqCPZSDWww", // Enter the Key ID generated from the Dashboard
+
     //"amount": "1500", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     "currency": "INR",
     "name": "TapToCure",
@@ -22,9 +22,9 @@ var options = {
     "handler": function (response){
         alert(response.razorpay_payment_id);
         alert(response.razorpay_order_id);
-        alert(response.razorpay_signature); 
-        alert("Payment Sucessfull"); 
-     
+        alert(response.razorpay_signature);
+        alert("Payment Sucessfull");
+
     },
     "prefill": {
         "name":"" ,

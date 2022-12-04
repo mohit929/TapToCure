@@ -1,33 +1,35 @@
 package com.stackroute.appointmentservice.controller;
 
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyBookedException;
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyExistsException;
-import com.stackroute.appointmentservice.exception.AppointmentNotExistsException;
 import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.model.AppointmentStatus;
+import com.stackroute.appointmentservice.model.Clinic;
+import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
 import com.stackroute.appointmentservice.service.AppointmentService;
-
+import com.stackroute.appointmentservice.service.ClinicService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/appointmentservice")
 public class Controller {
+    Logger logger = Logger.getLogger(Comparable.class.getSimpleName());
     @Autowired
     AppointmentService appointmentService;
+    @Autowired
+    ClinicService clinicService;
+    @Autowired
+    Publisher publisher;
 
-    //@Hidden // from swagger
     @GetMapping("/home")
     public String home() {
         return "home";
     }
 
     @PostMapping("/appointment/create")
-    public Appointment createAppointment(@RequestBody Appointment appointment)
-    {
+    public Appointment createAppointment(@RequestBody Appointment appointment) {
         try {
             return appointmentService.createAppointment(appointment);
         } catch (Exception e) {
@@ -37,36 +39,36 @@ public class Controller {
     }
 
     @PostMapping("/appointment/book")
-    public Appointment bookAppointment(@RequestBody Appointment appointment)
-    {
+    public Appointment bookAppointment(@RequestBody Appointment appointment) {
         try {
-            return appointmentService.bookAppointment(appointment);
+            Appointment a = appointmentService.bookAppointment(appointment);
+            publisher.sendAppointment(a,""+AppointmentStatus.BOOKED);
+            return a;
         } catch (Exception e) {
-            //return  "failed";
             e.printStackTrace();
         }
         return null;
     }
 
     @PutMapping("/appointment")
-    public Appointment updateAppointment(@RequestBody Appointment appointment)
-    {
-        try
-        {
-            return appointmentService.updateAppointment(appointment);
-        }
-        catch (Exception e) {
+    public Appointment updateAppointment(@RequestBody Appointment appointment) {
+        try {
+            Appointment a = appointmentService.updateAppointment(appointment);
+            publisher.sendAppointment(a, "UPDATED");
+            return a;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     @PutMapping("/appointment/cancel/{appointmentId}")
-    public Appointment cancelAppointment(@PathVariable  int appointmentId)
-    {
+    public Appointment cancelAppointment(@PathVariable int appointmentId) {
 
         try {
-            return appointmentService.cancelAppointment(appointmentId);
+            Appointment a = appointmentService.cancelAppointment(appointmentId);
+            publisher.sendAppointment(a, "" + AppointmentStatus.CANCELLED);
+            return a;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,8 +76,7 @@ public class Controller {
     }
 
     @DeleteMapping("/appointment/{appointmentId}")
-    public Appointment deleteAppointment(@PathVariable int appointmentId)
-    {
+    public Appointment deleteAppointment(@PathVariable int appointmentId) {
         try {
             return appointmentService.deleteAppointment(appointmentId);
         } catch (Exception e) {
@@ -85,8 +86,7 @@ public class Controller {
     }
 
     @GetMapping("/appointment")
-    public List<Appointment> getAppointment()
-    {
+    public List<Appointment> getAppointment() {
         try {
             return appointmentService.getAppointment();
         } catch (Exception e) {
@@ -96,8 +96,7 @@ public class Controller {
     }
 
     @GetMapping("/appointment/{appointmentId}")
-    public Appointment getAppointment(@PathVariable int appointmentId)
-    {
+    public Appointment getAppointment(@PathVariable int appointmentId) {
         try {
             return appointmentService.getAppointment(appointmentId);
         } catch (Exception e) {
@@ -107,8 +106,7 @@ public class Controller {
     }
 
     @GetMapping("/appointment/available")
-    public List<Appointment> getAvailableAppointment()
-    {
+    public List<Appointment> getAvailableAppointment() {
         try {
             return appointmentService.getAvailableAppointment();
         } catch (Exception e) {
@@ -118,14 +116,19 @@ public class Controller {
     }
 
     @GetMapping("/appointment/patient/{patientId}/{appointmentStatus}")
-    public List<Appointment> findByPatientDetailsAndAppointmentStatus(@PathVariable int patientId,@PathVariable AppointmentStatus appointmentStatus)
-    {
+    public List<Appointment> findByPatientDetailsAndAppointmentStatus(@PathVariable int patientId, @PathVariable AppointmentStatus appointmentStatus) {
         try {
-            return appointmentService.findByPatientDetailsAndAppointmentStatus(patientId,appointmentStatus);
+            return appointmentService.findByPatientDetailsAndAppointmentStatus(patientId, appointmentStatus);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @GetMapping("/createDummyClinicAppointment")
+    public Clinic createDummyClinicAppointment()
+    {
+        return clinicService.createDummyClinicAppointment();
     }
 
 }

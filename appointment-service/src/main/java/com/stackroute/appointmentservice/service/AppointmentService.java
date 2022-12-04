@@ -1,32 +1,29 @@
 package com.stackroute.appointmentservice.service;
 
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyBookedException;
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyCancelledException;
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyExistsException;
-import com.stackroute.appointmentservice.exception.AppointmentNotExistsException;
+import com.stackroute.appointmentservice.exception.*;
 import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.model.AppointmentStatus;
-import com.stackroute.appointmentservice.model.Patient;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface AppointmentService {
 
-    public Appointment createAppointment(Appointment appointment) throws AppointmentAlreadyExistsException, CloneNotSupportedException;
+    Appointment createAppointment(Appointment appointment) throws AppointmentAlreadyExistsException, CloneNotSupportedException, ParseException, InvalidDateTimeException;
 
-    public Appointment bookAppointment(Appointment appointment) throws AppointmentNotExistsException, AppointmentAlreadyBookedException, CloneNotSupportedException;
+    Appointment bookAppointment(Appointment appointment) throws AppointmentNotExistsException, AppointmentAlreadyBookedException, CloneNotSupportedException;
 
-    public Appointment updateAppointment(Appointment appointment) throws AppointmentNotExistsException, AppointmentAlreadyCancelledException, CloneNotSupportedException;
+    Appointment updateAppointment(Appointment appointment) throws AppointmentNotExistsException, AppointmentAlreadyCancelledException, CloneNotSupportedException;
 
-    public Appointment cancelAppointment(int appointmentId) throws AppointmentNotExistsException, AppointmentAlreadyCancelledException;
+    Appointment cancelAppointment(int appointmentId) throws AppointmentNotExistsException, AppointmentAlreadyCancelledException;
 
-    public Appointment deleteAppointment(int appointmentId) throws AppointmentNotExistsException;
+    Appointment deleteAppointment(int appointmentId) throws AppointmentNotExistsException;
 
-    public List<Appointment> getAppointment() throws AppointmentNotExistsException;
+    List<Appointment> getAppointment() throws AppointmentNotExistsException;
 
-    public Appointment getAppointment(int appointmentId) throws AppointmentNotExistsException;
+    Appointment getAppointment(int appointmentId) throws AppointmentNotExistsException;
 
-    public List<Appointment> getAvailableAppointment() throws Exception;
+    List<Appointment> getAvailableAppointment() throws AppointmentNotExistsException;
 
-    public List<Appointment> findByPatientDetailsAndAppointmentStatus(int patientId, AppointmentStatus appointmentStatus) throws Exception;
+    List<Appointment> findByPatientDetailsAndAppointmentStatus(int patientId, AppointmentStatus appointmentStatus) throws AppointmentNotExistsException;
 }

@@ -38,6 +38,7 @@ public class Patient implements Cloneable {
 //    private String PinCode;
 //    private String patientSymptoms;
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

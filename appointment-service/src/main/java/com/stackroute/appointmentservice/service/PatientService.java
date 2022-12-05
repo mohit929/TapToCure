@@ -3,13 +3,9 @@ package com.stackroute.appointmentservice.service;
 import com.stackroute.appointmentservice.model.Patient;
 
 public interface PatientService {
+    Patient addPatient(Patient patient);
 
-    public Patient addPatient(Patient patient);
+    boolean isPatientExists(Patient patient);
 
-    public boolean isPatientExists(Patient patient);
-
-    public Patient getPatient(int patientId);
-
-
-
+    Patient getPatient(int patientId);
 }

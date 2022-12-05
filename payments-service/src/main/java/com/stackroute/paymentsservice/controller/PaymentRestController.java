@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.razorpay.Order;
 
+@RequestMapping("/payment")
 @RestController
 public class PaymentRestController {
 	
@@ -31,13 +33,13 @@ public class PaymentRestController {
 	private RabbitTemplate template;
 	
 
-//	@PostMapping("/publish")
-//	public String publishpaymentdetails(@RequestBody PaymentDetailsPOJO paymentdetailspojo) {
-//	
-//		template.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUNTING_KEY, paymentdetailspojo);
-//		return "Details published";
-//		
-//	}
+	@PostMapping("/publish")
+	public String publishpaymentdetails(@RequestBody PaymentDetailsPOJO paymentdetailspojo) {
+	
+		template.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUNTING_KEY, paymentdetailspojo);
+		return "Details published";
+		
+	}
 	
 	
 	

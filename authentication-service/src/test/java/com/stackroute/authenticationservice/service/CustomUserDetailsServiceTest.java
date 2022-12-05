@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @SpringBootTest
 public class CustomUserDetailsServiceTest {
 
-    private User user,user1;
+    private User user,user1,saveUser;
 
     @Mock
     UserRepository userRepository;
@@ -28,6 +28,11 @@ public class CustomUserDetailsServiceTest {
     {
          user=new User(102,"mohit","7477008050","mohit929surya1c@gmail.com","doctor");
          user1=null;
+         saveUser=new User();
+         saveUser.setUsername("Gaurav Sinha");
+         saveUser.setPassword("8770339014");
+         saveUser.setRole("Patient");
+         saveUser.setEmail("gauravsinha@gmail.com");
     }
 
     @Test
@@ -42,6 +47,15 @@ public class CustomUserDetailsServiceTest {
         Mockito.when((userRepository.findbyUserEmail("gauravsinha@gmail.com"))).thenReturn(user1);
         Assert.assertThrows(UsernameNotFoundException.class,()->customUserDetailsService.loadUserByUsername("auravsinha@gmail.com"));
     }
+
+    @Test
+    public void testSave()
+    {
+        Mockito.when(userRepository.save(saveUser)).thenReturn(saveUser);
+        Assert.assertEquals(saveUser,userRepository.save(saveUser));
+    }
+
+
 
 
 }

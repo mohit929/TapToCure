@@ -29,5 +29,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
     }
 
+    public User findbyUserEmail(String email)
+    {
+        return userRepository.findbyUserEmail(email);
+    }
+
+    public User save(User user)
+    {
+        return userRepository.save(user);
+    }
+
 
 }

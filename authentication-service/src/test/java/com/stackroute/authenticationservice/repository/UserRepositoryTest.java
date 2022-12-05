@@ -15,7 +15,7 @@ public class UserRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
-    User expectedUser;
+    User expectedUser,saveUser;
 
     @BeforeEach
     public void setup()
@@ -29,10 +29,21 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void testUserRepository()
+    public void testFindbyUserEmail()
     {
         User user = userRepository.findbyUserEmail("mohit929surya1c@gmail.com");
         Assert.assertEquals(expectedUser, user);
+    }
+
+    @Test
+    public void testSave()
+    {   saveUser=new User();
+        saveUser.setEmail("gauravsinha@gmail.com");
+        saveUser.setPassword("8770339014");
+        saveUser.setRole("Patient");
+        saveUser.setUsername("Gaurav Sinha");
+        Assert.assertEquals(saveUser,userRepository.save(saveUser));
+        userRepository.delete(saveUser);
     }
 
 }

@@ -61,7 +61,7 @@ document.getElementById('rzp-button1').onclick = function(e){
 
 //
 function paymentUpdateOnServerSucess(RazorOrderId,status){
-fetch('http://localhost:8088/update_sucess_order', {
+fetch('http://localhost:8088/payment/update_sucess_order', {
 		  method: 'PUT', // or 'POST' or 'GET'
 		  headers: {
 		    'Content-Type': 'application/json',

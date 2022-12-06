@@ -22,9 +22,9 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user=userRepository.findbyUserEmail("mohit929surya1c@gmail.com");
-		System.out.println(user);
-		UserDetails userDetails=customUserDetailsService.loadUserByUsername("mohit929surya1c@gmail.com");
-		System.out.println(userDetails);
+//		User user=userRepository.findbyUserEmail("mohit929surya1c@gmail.com");
+//		System.out.println(user);
+//		UserDetails userDetails=customUserDetailsService.loadUserByUsername("mohit929surya1c@gmail.com");
+//		System.out.println(userDetails);
 	}
 }

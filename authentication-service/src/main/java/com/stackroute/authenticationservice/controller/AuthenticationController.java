@@ -1,11 +1,16 @@
 package com.stackroute.authenticationservice.controller;
 
+import com.stackroute.authenticationservice.dto.UserDTO;
 import com.stackroute.authenticationservice.exception.InvalidCredentialsException;
 import com.stackroute.authenticationservice.model.AuthenticationRequest;
 import com.stackroute.authenticationservice.model.AuthenticationResponse;
+import com.stackroute.authenticationservice.model.User;
+import com.stackroute.authenticationservice.repository.UserRepository;
 import com.stackroute.authenticationservice.service.CustomUserDetailsService;
 import com.stackroute.authenticationservice.util.JwtUtil;
 import org.sonatype.aether.repository.Authentication;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +29,10 @@ public class AuthenticationController {
     CustomUserDetailsService customUserDetailsService;
     @Autowired
     JwtUtil jwtUtil;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+    @Autowired
+    UserRepository userRepository;
     @PostMapping(value = "/generateToken")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest)
     {   String token=null;
@@ -60,4 +69,5 @@ public class AuthenticationController {
     {
         return "Welcome to Authentication-Service";
     }
+
 }

@@ -4,6 +4,7 @@ import com.stackroute.appointmentservice.exception.*;
 import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.model.AppointmentStatus;
 import com.stackroute.appointmentservice.model.Patient;
+import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
 import com.stackroute.appointmentservice.repo.AppointmentRepo;
 import com.stackroute.appointmentservice.repo.PatientRepo;
 import org.apache.log4j.Logger;
@@ -27,6 +28,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     PatientRepo patientRepo;
     Appointment existingAppointment;
     Patient existingPatient;
+    @Autowired
+    Publisher publisher;
 
     public AppointmentServiceImpl() {
         logger = Logger.getLogger(AppointmentServiceImpl.class.getSimpleName());
@@ -52,6 +55,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         // creating dummy patient for new available appointment
         Patient emptyPatient = new Patient(1, "");
         patientRepo.save(emptyPatient);
+        publisher.sendPatient(emptyPatient);
         logger.info("Added: Empty patient record");
 
         // storing patient object in appointment object

@@ -14,8 +14,10 @@ public class MessageConfiguration {
     // new  code
     public static final String C_QUEUE = "CLINIC_QUEUE";
     public static final String A_QUEUE = "APPOINTMENT_QUEUE";
+    public static final String P_QUEUE = "PATIENT_QUEUE";
     public static final String C_KEY = "CLINIC_KEY";
     public static final String A_KEY = "APPOINTMENT_KEY";
+    public static final String P_KEY = "PATIENT_KEY";
     public static final String EXCHANGE = "EXCHANGE";
 
 
@@ -29,6 +31,12 @@ public class MessageConfiguration {
     public Queue aQueue() {
         logger.info("queue created: "+A_QUEUE);
         return new Queue(A_QUEUE);
+    }
+
+    @Bean
+    public Queue pQueue() {
+        logger.info("queue created: "+P_QUEUE);
+        return new Queue(P_QUEUE);
     }
 
     @Bean
@@ -54,6 +62,15 @@ public class MessageConfiguration {
                 .bind(aQueue())
                 .to(topicExchange())
                 .with(A_KEY);
+    }
+
+    @Bean
+    public Binding bindingPQ() {
+        logger.info("binding created: "+P_KEY);
+        return BindingBuilder
+                .bind(pQueue())
+                .to(topicExchange())
+                .with(P_KEY);
     }
 
     // we use message converter class because we are playing with the object not with string

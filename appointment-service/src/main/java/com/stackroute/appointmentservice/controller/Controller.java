@@ -128,6 +128,7 @@ public class Controller {
     @GetMapping("/createDummyClinicAppointment")
     public Clinic createDummyClinicAppointment()
     {
+
         return clinicService.createDummyClinicAppointment();
     }
 

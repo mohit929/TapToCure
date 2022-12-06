@@ -1,9 +1,11 @@
 package com.stackroute.appointmentservice.rabbitpublisher;
 
 
+import com.stackroute.appointmentservice.dto.AppointmentDto;
 import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.model.AppointmentStatus;
 import com.stackroute.appointmentservice.model.Clinic;
+import com.stackroute.appointmentservice.model.Patient;
 import com.stackroute.appointmentservice.rabbitconfiguration.MessageConfiguration;
 import org.apache.log4j.Logger;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -27,7 +29,20 @@ public class Publisher {
 
     public void sendAppointment(Appointment appointment, String status)
     {
-        template.convertAndSend(MessageConfiguration.EXCHANGE,MessageConfiguration.A_KEY,appointment);
+        AppointmentDto appointmentDto = new AppointmentDto();
+        appointmentDto.setAppointmentId(appointment.getAppointmentId());
+        appointmentDto.setAppointmentDate(appointment.getAppointmentDate());
+        appointmentDto.setAppointmentTime(appointment.getAppointmentTime());
+        appointmentDto.setAppointmentStatus(appointment.getAppointmentStatus());
+        appointmentDto.setPatientDetails(appointment.getPatientDetails());
+
+        template.convertAndSend(MessageConfiguration.EXCHANGE,MessageConfiguration.A_KEY,appointmentDto);
         logger.info("Published: "+status+", Appointment record");
+    }
+
+    public void sendPatient(Patient patient)
+    {
+        template.convertAndSend(MessageConfiguration.EXCHANGE,MessageConfiguration.P_KEY,patient);
+        logger.info("Published: Patient record");
     }
 }

@@ -32,5 +32,4 @@ public class PatientServiceImpl implements PatientService {
         return patientRapo.getOne(patientId);
     }
 
-
 }

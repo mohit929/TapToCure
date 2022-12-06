@@ -1,10 +1,11 @@
 package com.stackroute.appointmentservice.controller;
 
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyExistsException;
 import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.model.AppointmentStatus;
 import com.stackroute.appointmentservice.model.Patient;
 import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
+import com.stackroute.appointmentservice.repo.PatientRepo;
+import com.stackroute.appointmentservice.service.PatientService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,8 @@ class TestController {
     Controller controller;
     @Autowired
     Publisher publisher;
+    @Autowired
+    PatientService patientService;
 
 
     @Test
@@ -28,7 +31,7 @@ class TestController {
     @Order(2)
     void testCreateAppointment() {
         // Test for getAllAppointments: When 0 records are there
-        Assertions.assertNull( controller.getAppointment());
+        Assertions.assertNull(controller.getAppointment());
         // Test for getAvailableAppointment: When 0 records are there
         Assertions.assertNull(controller.getAvailableAppointment());
         // InvalidDateTime
@@ -45,12 +48,12 @@ class TestController {
         Assertions.assertEquals(1, controller.createAppointment(new Appointment(4, "03/11/2023", "02:00", null, null)).getPatientDetails().getPatientId());
 
         // Test for getAvailableAppointment: When 0 bookings are there
-        Assertions.assertNull(controller.findByPatientDetailsAndAppointmentStatus(2,AppointmentStatus.BOOKED));
+        Assertions.assertNull(controller.findByPatientDetailsAndAppointmentStatus(2, AppointmentStatus.BOOKED));
     }
 
     @Test
     @Order(3)
-    void testBookAppointment()  {
+    void testBookAppointment() {
 
 
         Assertions.assertNotNull(controller.bookAppointment(new Appointment(1, new Patient("Sachin Nandanwal"))));
@@ -114,16 +117,21 @@ class TestController {
 
     @Order(10)
     @Test
-    void testGetAppointmentByPatientId()
-    {
-        Assertions.assertNotNull(controller.findByPatientDetailsAndAppointmentStatus(2,AppointmentStatus.CANCELLED));
+    void testGetAppointmentByPatientId() {
+        Assertions.assertNotNull(controller.findByPatientDetailsAndAppointmentStatus(2, AppointmentStatus.CANCELLED));
     }
 
     @Order(11)
     @Test
-    void   testDummyClinicPublisher()
-    {
+    void testDummyClinicPublisher() {
         Assertions.assertNotNull(controller.createDummyClinicAppointment());
+    }
+
+    @Order(12)
+    @Test
+    void addPatientFail()
+    {
+        Assertions.assertNotNull(patientService.addPatient(new Patient(1,"Dummy Patient","dummypatient@dummy.com","9876543210")));
     }
 
 }

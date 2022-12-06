@@ -1,5 +1,6 @@
 package com.stackroute.appointmentservice.service;
 
+import com.stackroute.appointmentservice.dto.PatientDto;
 import com.stackroute.appointmentservice.model.Patient;
 
 public interface PatientService {
@@ -8,4 +9,5 @@ public interface PatientService {
     boolean isPatientExists(Patient patient);
 
     Patient getPatient(int patientId);
+
 }

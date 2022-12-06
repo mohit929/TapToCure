@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Component
@@ -45,17 +48,19 @@ public class AppointmentServiceImpl implements AppointmentService {
         // to prevent past date bookings
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DATE),0,0,0);
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE), 0, 0, 0);
+        cal.set(Calendar.MILLISECOND, 0); // this is imp
         Date today = cal.getTime();
         Date appointmentDate = new SimpleDateFormat("dd/MM/yyyy").parse(appointment.getAppointmentDate());
+
         if (appointmentDate.compareTo(today) < 0) {
             throw new InvalidDateTimeException("Past booking not allowed Today is " + today + " trying to book for " + appointmentDate);
         }
 
         // creating dummy patient for new available appointment
-        Patient emptyPatient = new Patient(1, "");
+        Patient emptyPatient = new Patient(1);
         patientRepo.save(emptyPatient);
-        publisher.sendPatient(emptyPatient);
+        // publisher.sendPatient(emptyPatient);
         logger.info("Added: Empty patient record");
 
         // storing patient object in appointment object

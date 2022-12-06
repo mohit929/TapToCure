@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Component
 @NoArgsConstructor
@@ -15,7 +18,7 @@ import javax.persistence.*;
 public class Appointment {
     @Id
     private int appointmentId;
-    private String appointmentDate;
+    private String appointmentDate = "dd/MM/yyyy";
     private String appointmentTime;
 
     // enum reference: for custom status values
@@ -25,10 +28,10 @@ public class Appointment {
     @JoinColumn(name = "patientId") // name= "primary key of second table"
     private Patient patientDetails;
 
-    public Appointment(int appointmentId,Patient patient) {
+    public Appointment(int appointmentId, Patient patient) {
         this.appointmentId = appointmentId;
-        this.patientDetails=patient;
+        this.patientDetails = patient;
     }
 
-  }
+}
 

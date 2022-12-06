@@ -1,6 +1,7 @@
 package com.stackroute.appointmentservice.service;
 
 import com.stackroute.appointmentservice.model.Patient;
+import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
 import com.stackroute.appointmentservice.repo.PatientRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class PatientServiceImpl implements PatientService {
     @Autowired
     PatientRepo patientRapo;
+
 
     @Override
     public Patient addPatient(Patient patient) {

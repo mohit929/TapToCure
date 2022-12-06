@@ -8,17 +8,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 class AppointmentServiceApplicationTests {
-
-	private MockMvc mockMvc;
-	private WebApplicationContext webApplicationContext;
-
 	@Test
 	void contextLoads()
 	{
-
 	}
 
 }

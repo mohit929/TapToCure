@@ -19,7 +19,7 @@ public class RabbitMQConfig {
 	
 	public static final String ROUNTING_KEY = "paymennt_rounting_key";
 	public static final String EXCHANGE = "payment_exchange";
-	public static final String QUEUE = "payment_queue";
+	public static final String QUEUE = "APPOINTMENT_QUEUE";
 
 	@Bean
 	public Queue  queue() {

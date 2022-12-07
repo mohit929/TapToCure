@@ -11,13 +11,13 @@ import java.util.List;
 // repository: to perform crud operations on Appointment object
 @Repository
 public interface AppointmentRepo extends JpaRepository<Appointment, Integer> {
-  /*
-  custom repository method to get only AVAILABLE appointments from db
-   */
-  List<Appointment> findByAppointmentStatusIn(List<AppointmentStatus> appointmentStatus);
+    /*
+    custom repository method to get only AVAILABLE appointments from db
+     */
+    List<Appointment> findByAppointmentStatusIn(List<AppointmentStatus> appointmentStatus);
 
-  /*
-  custom repository method to get only appointments of specific patient
-   */
-  List<Appointment> findByPatientDetailsAndAppointmentStatus(Patient patientDetails,AppointmentStatus appointmentStatus);
+    /*
+    custom repository method to get only appointments of specific patient
+     */
+    List<Appointment> findByPatientDetailsAndAppointmentStatus(Patient patientDetails, AppointmentStatus appointmentStatus);
 }

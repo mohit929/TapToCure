@@ -38,16 +38,18 @@ public class ClinicDetail {
     @Field("total_occupied_slots")
     static int totalOccupiedSlots;
     @Field("doctor_id")
-    private int doctorId;
+    private String doctorId;
     @Field("doctor_name")
     private String doctorName;
     @Field("specialization")
     private String specialization;
     @Field("doctor_contact")
     private String doctor_contact;
+    @Field("doctor_mail")
+    private String doctor_mail;
     @Field("applist")
     private List<Appointment> appointment;
-    public ClinicDetail(int clinicID, String clinicName, String state, String city, String area, String buildingNumber, int totalSlots, String openingTime, String closingTime, int serviceDays, int totalOccupiedSlots,int doctorId, String doctorName, String specialization, String doctor_contact, List<Appointment> appointment) {
+    public ClinicDetail(int clinicID, String clinicName, String state, String city, String area, String buildingNumber, int totalSlots, String openingTime, String closingTime, int serviceDays, int totalOccupiedSlots,String doctorId, String doctorName, String specialization, String doctor_contact, String doctor_mail,List<Appointment> appointment) {
         this.clinicID = clinicID;
         this.clinicName = clinicName;
         this.state = state;
@@ -59,10 +61,11 @@ public class ClinicDetail {
         this.closingTime = closingTime;
         this.serviceDays = serviceDays;
         this.totalOccupiedSlots=totalOccupiedSlots;
-        this.doctorId = doctorId;
+        this.doctorId=doctorId;
         this.doctorName = doctorName;
         this.specialization = specialization;
         this.doctor_contact = doctor_contact;
+        this.doctor_mail=doctor_mail;
         this.appointment = appointment;
     }
 

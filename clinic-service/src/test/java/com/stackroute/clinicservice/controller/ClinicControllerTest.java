@@ -41,7 +41,7 @@ public class ClinicControllerTest {
     }
     @Test
     public void saveClinicTest() throws Exception {
-        ClinicDetail clinicDetail=new ClinicDetail(111, "Lifeline", "UP", "Bareilly", "Nh24", "10", 100, "7:00AM", "10:00PM", 7, 75,111,"Dr.MK","ortho","9002778201",null);
+        ClinicDetail clinicDetail=new ClinicDetail(111, "Lifeline", "UP", "Bareilly", "Nh24", "10", 100, "7:00AM", "10:00PM", 7, 75,"111","Dr.MK","ortho","9002778201","abc@gmail.com",null);
         clinicDetail.setClinicID(2334);
         clinicDetail.setClinicName("Medicity");
         String jsonRequest= om.writeValueAsString(clinicDetail);

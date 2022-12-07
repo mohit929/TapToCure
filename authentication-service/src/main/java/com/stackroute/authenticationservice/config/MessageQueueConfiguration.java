@@ -21,15 +21,15 @@ public class MessageQueueConfiguration {
     }
 
     @Bean
-    public DirectExchange directExchange()
+    public TopicExchange topicExchange()
     {
-        return new DirectExchange(EXCHANGE_NAME);
+        return new TopicExchange(EXCHANGE_NAME);
     }
 
     @Bean
-    public Binding bindingA(Queue queueA, DirectExchange directExchange)
+    public Binding bindingA(Queue queueA, TopicExchange topicExchange)
     {
-        return BindingBuilder.bind(queueA).to(directExchange).with(ROUTING_KEY);
+        return BindingBuilder.bind(queueA).to(topicExchange).with(ROUTING_KEY);
     }
 
     @Bean

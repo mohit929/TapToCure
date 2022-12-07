@@ -17,26 +17,19 @@ import javax.persistence.Id;
 @Entity(name = "patient_detail")
 public class Patient implements Cloneable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int patientId;
     private String patientName;
+    private String patientEmailId;
+    private String patientPhoneNo;
 
     public Patient(int patientId) {
         this.patientId = patientId;
     }
+
     public Patient(String patientName) {
         this.patientName = patientName;
     }
-
-    //    private String patientGender;
-//    private String patientBloodGroup;
-//    private Date patientDob;
-//    private String patientPhoneNumber;
-//    private String patientEmail;
-//    private String City;
-//    private String State;
-//    private String PinCode;
-//    private String patientSymptoms;
 
     @Override
     public Object clone() throws CloneNotSupportedException {

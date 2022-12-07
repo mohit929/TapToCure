@@ -1,15 +1,17 @@
 package com.stackroute.patientservice.service;
 
+import com.stackroute.patientservice.exception.NoPatientRecordsPresentException;
+import com.stackroute.patientservice.exception.PatientNotFoundException;
 import com.stackroute.patientservice.model.Patient;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PatientService {
-    String registerPatient(Patient patient);
-    Optional<Patient> getPatientDetails(String patientId) throws Exception;
-    Patient updatePatientDetails(Patient patient);
-    List<Patient> getAllPatientDetails();
+    String registerPatient(Patient patient) throws Exception;
+    String getPatientDetails(String patientId) throws Exception;
+    Patient getPatientDetailsRabbit(String patientId);
+    String updatePatientDetails(Patient patient) throws Exception;
+    List<Patient> getAllPatientDetails() throws NoPatientRecordsPresentException;
     boolean isEmailExists(String patient) throws Exception;
-    String deletePatient(String patientId);
+    String deletePatient(String patientId) throws PatientNotFoundException;
 }

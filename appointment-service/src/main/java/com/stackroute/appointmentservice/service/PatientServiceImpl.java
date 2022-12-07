@@ -9,10 +9,17 @@ import org.springframework.stereotype.Service;
 public class PatientServiceImpl implements PatientService {
     @Autowired
     PatientRepo patientRapo;
+    @Autowired
+    Patient patient;
 
     @Override
     public Patient addPatient(Patient patient) {
-        return patientRapo.save(patient);
+        if(!patientRapo.existsById(patient.getPatientId()))
+        {
+            System.out.println("Created: New Patient record");
+            return patientRapo.save(patient);
+        }
+        return patient;
     }
 
     @Override

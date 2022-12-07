@@ -1,5 +1,6 @@
 package com.stackroute.authenticationservice.config;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.stackroute.authenticationservice.filter.JwtFilter;
 import com.stackroute.authenticationservice.service.CustomUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 @Slf4j
@@ -28,10 +32,11 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         log.info("Inside authentication configure method of configuration class");
-        http.csrf().disable().cors().disable().authorizeRequests().antMatchers("/generateToken","/swagger-ui/**","/v3/api-docs/**","/welcome"
+        http.csrf().disable().cors().disable().authorizeRequests().antMatchers("/authentication_service/generateToken","/swagger-ui/**","/v3/api-docs/**","/authentication_service/welcome"
                         ,"/v2/api-docs/**","/swagger-resources/**","/webjars/**").permitAll()
                 .anyRequest().authenticated().and().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

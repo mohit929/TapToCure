@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/authentication_service")
 public class AuthenticationController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -52,13 +53,13 @@ public class AuthenticationController {
     }
 
     @GetMapping("/doctor")
-    @PreAuthorize("hasAuthority('doctor')")
+    @PreAuthorize("hasAuthority('Doctor')")
     public  String doctor()
     {
         return "hi doctor";
     }
     @GetMapping("/patient")
-    @PreAuthorize("hasAuthority('patient')")
+    @PreAuthorize("hasAuthority('Patient')")
     public String patient()
     {
         return "Hi patient";

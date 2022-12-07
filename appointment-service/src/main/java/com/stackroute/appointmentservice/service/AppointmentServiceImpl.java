@@ -1,22 +1,21 @@
 package com.stackroute.appointmentservice.service;
 
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyBookedException;
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyCancelledException;
-import com.stackroute.appointmentservice.exception.AppointmentAlreadyExistsException;
-import com.stackroute.appointmentservice.exception.AppointmentNotExistsException;
+import com.stackroute.appointmentservice.exception.*;
 import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.model.AppointmentStatus;
 import com.stackroute.appointmentservice.model.Patient;
 import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
 import com.stackroute.appointmentservice.repo.AppointmentRepo;
 import com.stackroute.appointmentservice.repo.PatientRepo;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     AppointmentRepo appointmentRepo;
     @Autowired
     PatientService patientService;
-    //PatientService patientService = new PatientServiceImpl();
     @Autowired
     PatientRepo patientRepo;
     Appointment existingAppointment;
@@ -38,7 +36,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     public AppointmentServiceImpl() {
         logger = Logger.getLogger(AppointmentServiceImpl.class.getSimpleName());
-        BasicConfigurator.configure();
     }
 
     /*
@@ -47,11 +44,23 @@ public class AppointmentServiceImpl implements AppointmentService {
         and empty patient
     it will return the object of appointment
      */
-    public Appointment createAppointment(Appointment appointment) throws AppointmentAlreadyExistsException, CloneNotSupportedException {
+    public Appointment createAppointment(Appointment appointment) throws AppointmentAlreadyExistsException, CloneNotSupportedException, ParseException, InvalidDateTimeException {
+        // to prevent past date bookings
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE), 0, 0, 0);
+        cal.set(Calendar.MILLISECOND, 0); // this is imp
+        Date today = cal.getTime();
+        Date appointmentDate = new SimpleDateFormat("dd/MM/yyyy").parse(appointment.getAppointmentDate());
+
+        if (appointmentDate.compareTo(today) < 0) {
+            throw new InvalidDateTimeException("Past booking not allowed Today is " + today + " trying to book for " + appointmentDate);
+        }
+
         // creating dummy patient for new available appointment
-        Patient emptyPatient = new Patient(1, "");
+        Patient emptyPatient = new Patient(1);
         patientRepo.save(emptyPatient);
-        publisher.sendPatient(emptyPatient);
+        // publisher.sendPatient(emptyPatient);
         logger.info("Added: Empty patient record");
 
         // storing patient object in appointment object
@@ -107,10 +116,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
             // saving appointment record in db
             existingAppointment.setAppointmentStatus(AppointmentStatus.BOOKED);
-            //existingAppointment.setAppointmentTime(modifiedAppointment.getAppointmentTime());
-            //existingAppointment.setAppointmentDate(modifiedAppointment.getAppointmentDate());
             appointmentRepo.save(existingAppointment);
             logger.info("Booked: Appointment record");
+
         }
 
         // returning inserted appointment record
@@ -182,6 +190,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointmentRepo.save(existingAppointment);
         logger.info("Updated: existingAppointment record");
 
+
         return existingAppointment;
     }
 
@@ -199,6 +208,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         // deleting the existing appointment
         appointmentRepo.save(existingAppointment);
         logger.info("Cancelled: Appointment");
+
+
         // returning stored appointment object that was deleted from db
         return existingAppointment;
     }
@@ -228,9 +239,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     */
     public List<Appointment> getAppointment() throws AppointmentNotExistsException {
 
-        List<Appointment> appointmentList = new ArrayList<Appointment>();
-
-        appointmentList = appointmentRepo.findAll();
+        List<Appointment> appointmentList = appointmentRepo.findAll();
 
         if (!appointmentList.isEmpty()) {
             return appointmentList;
@@ -257,7 +266,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     else throw AppointmentNotExistsException exception
      */
     @Override
-    public List<Appointment> getAvailableAppointment() throws Exception {
+    public List<Appointment> getAvailableAppointment() throws AppointmentNotExistsException {
         List<Appointment> appointmentList = appointmentRepo.findByAppointmentStatusIn(List.of(AppointmentStatus.AVAILABLE));
         if (!appointmentList.isEmpty()) {
             return appointmentList;
@@ -271,12 +280,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     else throw AppointmentNotExistsException exception
      */
     @Override
-    public List<Appointment> findByPatientDetailsAndAppointmentStatus(int patientId,AppointmentStatus appointmentStatus) throws Exception {
-        List<Appointment> appointmentList = appointmentRepo.findByPatientDetailsAndAppointmentStatus(new Patient(patientId),appointmentStatus);
+    public List<Appointment> findByPatientDetailsAndAppointmentStatus(int patientId, AppointmentStatus appointmentStatus) throws AppointmentNotExistsException {
+        List<Appointment> appointmentList = appointmentRepo.findByPatientDetailsAndAppointmentStatus(new Patient(patientId), appointmentStatus);
         if (!appointmentList.isEmpty()) {
             return appointmentList;
         }
-        throw new AppointmentNotExistsException("No appointment slot is booked by this patient: "+patientId);
+        throw new AppointmentNotExistsException("No appointment slot is booked by this patient: " + patientId);
     }
 
 }

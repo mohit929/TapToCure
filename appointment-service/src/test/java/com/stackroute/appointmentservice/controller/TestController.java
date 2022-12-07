@@ -3,15 +3,22 @@ package com.stackroute.appointmentservice.controller;
 import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.model.AppointmentStatus;
 import com.stackroute.appointmentservice.model.Patient;
+import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
+import com.stackroute.appointmentservice.repo.PatientRepo;
+import com.stackroute.appointmentservice.service.PatientService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ControllerTest {
+class TestController {
     @Autowired
     Controller controller;
+    @Autowired
+    Publisher publisher;
+    @Autowired
+    PatientService patientService;
 
 
     @Test
@@ -24,27 +31,29 @@ class ControllerTest {
     @Order(2)
     void testCreateAppointment() {
         // Test for getAllAppointments: When 0 records are there
-        Assertions.assertNull( controller.getAppointment());
+        Assertions.assertNull(controller.getAppointment());
         // Test for getAvailableAppointment: When 0 records are there
         Assertions.assertNull(controller.getAvailableAppointment());
-
-        Assertions.assertNotNull(controller.createAppointment(new Appointment(1, "01/11/2022", "01:00", AppointmentStatus.AVAILABLE, null)));
+        // InvalidDateTime
         Assertions.assertNull(controller.createAppointment(new Appointment(1, "01/11/2022", "01:00", AppointmentStatus.AVAILABLE, null)));
 
-        Assertions.assertNotNull(controller.createAppointment(new Appointment(2, "02/11/2022", "02:00", null, null)));
-        Assertions.assertNull(controller.createAppointment(new Appointment(2, "02/11/2022", "02:00", null, null)));
+        Assertions.assertNotNull(controller.createAppointment(new Appointment(1, "01/11/2023", "01:00", AppointmentStatus.AVAILABLE, null)));
+        Assertions.assertNull(controller.createAppointment(new Appointment(1, "01/11/2023", "01:00", AppointmentStatus.AVAILABLE, null)));
 
-        Assertions.assertEquals(AppointmentStatus.AVAILABLE, controller.createAppointment(new Appointment(3, "03/11/2022", "02:00", null, null)).getAppointmentStatus());
+        Assertions.assertNotNull(controller.createAppointment(new Appointment(2, "02/11/2023", "02:00", null, null)));
+        Assertions.assertNull(controller.createAppointment(new Appointment(2, "02/11/2023", "02:00", null, null)));
 
-        Assertions.assertEquals(1, controller.createAppointment(new Appointment(4, "03/11/2022", "02:00", null, null)).getPatientDetails().getPatientId());
+        Assertions.assertEquals(AppointmentStatus.AVAILABLE, controller.createAppointment(new Appointment(3, "03/11/2023", "02:00", null, null)).getAppointmentStatus());
+
+        Assertions.assertEquals(1, controller.createAppointment(new Appointment(4, "03/11/2023", "02:00", null, null)).getPatientDetails().getPatientId());
 
         // Test for getAvailableAppointment: When 0 bookings are there
-        Assertions.assertNull(controller.findByPatientDetailsAndAppointmentStatus(2,AppointmentStatus.BOOKED));
+        Assertions.assertNull(controller.findByPatientDetailsAndAppointmentStatus(2, AppointmentStatus.BOOKED));
     }
 
     @Test
     @Order(3)
-    void testBookAppointment()  {
+    void testBookAppointment() {
 
 
         Assertions.assertNotNull(controller.bookAppointment(new Appointment(1, new Patient("Sachin Nandanwal"))));
@@ -61,11 +70,11 @@ class ControllerTest {
     void testUpdateAppointment() {
         Assertions.assertNotNull(controller.updateAppointment(new Appointment(1, new Patient("Chetan Sunhare"))));
         Assertions.assertNotNull(controller.updateAppointment(new Appointment(1, new Patient(4))));
-        Assertions.assertNotNull(controller.updateAppointment(new Appointment(1, "22/11/2022", "22:22", null, new Patient(3))));
-        Assertions.assertNull(controller.updateAppointment(new Appointment(4, "22/11/2022", "22:22", null, new Patient(4))));
-        Assertions.assertNull(controller.updateAppointment(new Appointment(4, "22/11/2022", "04:44", null, new Patient(4))));
+        Assertions.assertNotNull(controller.updateAppointment(new Appointment(1, "22/11/2023", "22:22", null, new Patient(3))));
+        Assertions.assertNull(controller.updateAppointment(new Appointment(4, "22/11/2023", "22:22", null, new Patient(4))));
+        Assertions.assertNull(controller.updateAppointment(new Appointment(4, "22/11/2023", "04:44", null, new Patient(4))));
 
-        Assertions.assertNotNull(controller.updateAppointment(new Appointment(1, "22/11/2022", "04:44", AppointmentStatus.CANCELLED, new Patient(4))));
+        Assertions.assertNotNull(controller.updateAppointment(new Appointment(1, "22/11/2023", "04:44", AppointmentStatus.CANCELLED, new Patient(4))));
 
     }
 
@@ -108,9 +117,21 @@ class ControllerTest {
 
     @Order(10)
     @Test
-    void testGetAppointmentByPatientId()
+    void testGetAppointmentByPatientId() {
+        Assertions.assertNotNull(controller.findByPatientDetailsAndAppointmentStatus(2, AppointmentStatus.CANCELLED));
+    }
+
+    @Order(11)
+    @Test
+    void testDummyClinicPublisher() {
+        Assertions.assertNotNull(controller.createDummyClinicAppointment());
+    }
+
+    @Order(12)
+    @Test
+    void addPatientFail()
     {
-        Assertions.assertNotNull(controller.findByPatientDetailsAndAppointmentStatus(2,AppointmentStatus.CANCELLED));
+        Assertions.assertNotNull(patientService.addPatient(new Patient(1,"Dummy Patient","dummypatient@dummy.com","9876543210")));
     }
 
 }

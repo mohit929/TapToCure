@@ -33,6 +33,14 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+            <version>1.18.24</version>
+        </dependency>
+
+        <!-- For log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
         </dependency>
 
         <!-- For JPA Repository : Database methods -->
@@ -120,6 +128,8 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <finalName>appointment-service</finalName>
     </build>
 
 </project>

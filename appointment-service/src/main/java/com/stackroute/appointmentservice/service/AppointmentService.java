@@ -25,5 +25,5 @@ public interface AppointmentService {
 
     List<Appointment> getAvailableAppointment() throws AppointmentNotExistsException;
 
-    List<Appointment> findByPatientDetailsAndAppointmentStatus(int patientId, AppointmentStatus appointmentStatus) throws AppointmentNotExistsException;
+    List<Appointment> getAppointment(int patientId, AppointmentStatus appointmentStatus) throws AppointmentNotExistsException;
 }

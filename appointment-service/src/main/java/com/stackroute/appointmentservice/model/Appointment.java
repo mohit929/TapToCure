@@ -12,13 +12,13 @@ import javax.persistence.OneToOne;
 
 @Component
 @NoArgsConstructor
-@AllArgsConstructor
+
 @Data
 @Entity(name = "appointment_detail")
 public class Appointment {
     @Id
     private int appointmentId;
-    private String appointmentDate = "dd/MM/yyyy";
+    private String appointmentDate;
     private String appointmentTime;
 
     // enum reference: for custom status values
@@ -28,10 +28,19 @@ public class Appointment {
     @JoinColumn(name = "patientId") // name= "primary key of second table"
     private Patient patientDetails;
 
+    //int clinicId;
+
     public Appointment(int appointmentId, Patient patient) {
         this.appointmentId = appointmentId;
         this.patientDetails = patient;
     }
 
+    public Appointment(int appointmentId, String appointmentDate, String appointmentTime, AppointmentStatus appointmentStatus, Patient patientDetails) {
+        this.appointmentId = appointmentId;
+        this.appointmentDate = appointmentDate;
+        this.appointmentTime = appointmentTime;
+        this.appointmentStatus = appointmentStatus;
+        this.patientDetails = patientDetails;
+    }
 }
 

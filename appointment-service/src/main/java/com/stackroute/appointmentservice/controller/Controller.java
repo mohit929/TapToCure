@@ -2,11 +2,10 @@ package com.stackroute.appointmentservice.controller;
 
 import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.model.AppointmentStatus;
-import com.stackroute.appointmentservice.model.Clinic;
 import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
 import com.stackroute.appointmentservice.service.AppointmentService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class Controller {
         return null;
     }
 
-    @PutMapping("/appointment")
+    @PutMapping("/appointment/reschedule")
     public Appointment updateAppointment(@RequestBody Appointment appointment) {
         try {
             Appointment a = appointmentService.updateAppointment(appointment);
@@ -72,7 +71,7 @@ public class Controller {
         return null;
     }
 
-    @DeleteMapping("/appointment/{appointmentId}")
+    @DeleteMapping("/appointment/delete/{appointmentId}")
     public Appointment deleteAppointment(@PathVariable int appointmentId) {
         try {
             return appointmentService.deleteAppointment(appointmentId);
@@ -82,7 +81,7 @@ public class Controller {
         return null;
     }
 
-    @GetMapping("/appointment")
+    @GetMapping("/appointment/showAll")
     public List<Appointment> getAppointment() {
         try {
             return appointmentService.getAppointment();
@@ -92,10 +91,20 @@ public class Controller {
         return null;
     }
 
-    @GetMapping("/appointment/{appointmentId}")
+    @GetMapping("/appointment/showOne/{appointmentId}")
     public Appointment getAppointment(@PathVariable int appointmentId) {
         try {
             return appointmentService.getAppointment(appointmentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping("/appointment/showOne/{patientId}/{appointmentStatus}")
+    public List<Appointment> getAppointment(@PathVariable int patientId, @PathVariable AppointmentStatus appointmentStatus) {
+        try {
+            return appointmentService.getAppointment(patientId, appointmentStatus);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -112,24 +121,5 @@ public class Controller {
         return null;
     }
 
-    @GetMapping("/appointment/patient/{patientId}/{appointmentStatus}")
-    public List<Appointment> findByPatientDetailsAndAppointmentStatus(@PathVariable int patientId, @PathVariable AppointmentStatus appointmentStatus) {
-        try {
-            return appointmentService.findByPatientDetailsAndAppointmentStatus(patientId, appointmentStatus);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    // Temporary code: For RabbitMQ Publisher Testing
-    @GetMapping("/createDummyClinicAppointment")
-    public Clinic createDummyClinicAppointment() {
-        Appointment a1 = new Appointment(13, "01/11/2023", "01:00", null, null);
-        Appointment a2 = new Appointment(14, "02/11/2023", "02:00", null, null);
-        Clinic  clinic = new Clinic("1", List.of(a1, a2));
-        publisher.sendClinic(clinic);
-        return clinic;
-    }
 
 }

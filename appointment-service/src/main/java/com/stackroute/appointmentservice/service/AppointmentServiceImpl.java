@@ -101,12 +101,16 @@ public class AppointmentServiceImpl implements AppointmentService {
             if (patientService.isPatientExists(modifiedAppointment.getPatientDetails())) {
                 logger.info("Existing Patient");
                 existingPatient = patientService.getPatient(modifiedAppointment.getPatientDetails().getPatientId());
+
+                // updating the patients new details in db
+                existingPatient = patientService.checkAndUpdatePatient(existingPatient,modifiedAppointment.getPatientDetails());
+
                 // it will throw CloneNotSupportedException
                 existingAppointment.setPatientDetails((Patient) existingPatient.clone());
 
             } else {
                 logger.info("New Patient");
-                patientService.addPatient(modifiedAppointment.getPatientDetails());
+                patientRepo.save(modifiedAppointment.getPatientDetails());
                 logger.info("Inserted: Patient's record");
                 // updating the patient in existing appointment by modified patient
                 // it will throw CloneNotSupportedException
@@ -150,9 +154,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         // updating fields of existing appointment by the fields of modified appointment
         existingAppointment.setAppointmentStatus(AppointmentStatus.BOOKED);
-        if (modifiedAppointment.getAppointmentDate() != null)
+        if (modifiedAppointment.getAppointmentDate() != null && !modifiedAppointment.getAppointmentDate().equalsIgnoreCase(""))
             existingAppointment.setAppointmentDate(modifiedAppointment.getAppointmentDate());
-        if (modifiedAppointment.getAppointmentTime() != null)
+        if (modifiedAppointment.getAppointmentTime() != null  && !modifiedAppointment.getAppointmentTime().equalsIgnoreCase(""))
             existingAppointment.setAppointmentTime(modifiedAppointment.getAppointmentTime());
 
         // To check the change in patient detail
@@ -171,13 +175,16 @@ public class AppointmentServiceImpl implements AppointmentService {
                 existingPatient = patientService.getPatient(modifiedPatient.getPatientId());
             }
 
+            // updating the patient's new details in db
+            existingPatient = patientService.checkAndUpdatePatient(existingPatient,modifiedAppointment.getPatientDetails());
+
             // updating the patient in modified appointment by db record of original
             // it will throw CloneNotSupportedException
             existingAppointment.setPatientDetails((Patient) existingPatient.clone());
 
         } else {   // new patient
             logger.info("New Patient");
-            patientService.addPatient(modifiedPatient);
+            patientRepo.save(modifiedPatient);
 
             // updating the patient in existing appointment by modified patient
             // it will throw CloneNotSupportedException
@@ -280,7 +287,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     else throw AppointmentNotExistsException exception
      */
     @Override
-    public List<Appointment> findByPatientDetailsAndAppointmentStatus(int patientId, AppointmentStatus appointmentStatus) throws AppointmentNotExistsException {
+    public List<Appointment> getAppointment(int patientId, AppointmentStatus appointmentStatus) throws AppointmentNotExistsException {
         List<Appointment> appointmentList = appointmentRepo.findByPatientDetailsAndAppointmentStatus(new Patient(patientId), appointmentStatus);
         if (!appointmentList.isEmpty()) {
             return appointmentList;

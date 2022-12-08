@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.razorpay.Order;
 
-@RequestMapping("/payment")
+//@RequestMapping("/payment")
 @RestController
 public class PaymentRestController {
 	

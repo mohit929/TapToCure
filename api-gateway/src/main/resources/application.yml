@@ -29,7 +29,7 @@ spring:
         - id: registration-service
           uri: http://localhost:8081/
           predicates:
-            - Path=/register/**
+            - Path=/registration-service/**
 
         - id: Email-Service
           uri: http://localhost:9098/
@@ -39,14 +39,14 @@ spring:
         - id: appointment-service
           uri: http://localhost:8025/
           predicates:
-            - Path=/appointmentservice/**
+            - Path=/appointment-service/**
 
         - id: patient-service
           uri: http://localhost:9003/
           predicates:
-            - Path=/patientService/**
+            - Path=/patient-service/**
 
         - id: payments-service
           uri: http://localhost:8088/
           predicates:
-            - Path=/payment/**
+            - Path=/payment-service/**

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 
-public class Config {
+public class  Config {
     public static final String C_Queue="Clinic_Q";
     public static final String EXCHANGE="Clinic_Exchange";
     public static final String Clinic_Key="Clinic_Key";

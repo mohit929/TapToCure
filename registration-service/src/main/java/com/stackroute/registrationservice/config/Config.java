@@ -14,12 +14,14 @@ public class Config
     public static final String D_QUEUE="Doctor_Q";
     public static final String P_QUEUE="Patient_Q";
     public static final String E_QUEUE="EMAIL_Q";
+    public static final String OTP_QUEUE="OTP_Q";
     public static final String A_QUEUE="AUTH_Q";
     public static final String EXCHANGE="Registration_Exchange";
     public static final String DKEY="Doctor_key";
     public static final String PKEY="Patient_key";
     public static final String EKEY = "Email_key";
     public static final String AUTHKEY = "AUTHENTICATION_KEY";
+    public static final String OTPKEY = "OTP_KEY";
 
     @Bean
     public Queue dqueue(){
@@ -35,6 +37,11 @@ public class Config
     }
     @Bean
     public Queue authQueue(){
+        return new Queue(A_QUEUE);
+    }
+
+    @Bean
+    public Queue otpQueue(){
         return new Queue(A_QUEUE);
     }
     @Bean
@@ -73,6 +80,13 @@ public class Config
                 .bind(authQueue())
                 .to(topicExchange())
                 .with(AUTHKEY);
+    }
+    @Bean
+    public Binding bindingOtpQ(){
+        return BindingBuilder
+                .bind(otpQueue())
+                .to(topicExchange())
+                .with(OTPKEY);
     }
     @Bean
     public Jackson2JsonMessageConverter converter()

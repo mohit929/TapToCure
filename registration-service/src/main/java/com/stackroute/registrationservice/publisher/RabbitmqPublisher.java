@@ -50,7 +50,7 @@ public class RabbitmqPublisher {
 
         //OTP-Q queue
         OtpDto e= new OtpDto(emailId,otpno);
-        rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.EKEY,e);
+        rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.OTPKEY,e);
 
     }
 

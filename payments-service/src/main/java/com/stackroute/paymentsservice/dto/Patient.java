@@ -12,8 +12,6 @@ import javax.persistence.Id;
 
 @Component
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "patient_detail")
 public class Patient implements Cloneable {
     @Id

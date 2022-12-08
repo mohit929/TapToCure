@@ -19,12 +19,12 @@ public class RabbitmqPublisher {
         String role= String.valueOf(user.getRole());
         switch (role){
             case "Patient":
-                PatientDoctorDTO p=new PatientDoctorDTO(user.getUserId(),user.getEmailId(),user.getMobileNo());
+                PatientDoctorDTO p=new PatientDoctorDTO(user.getUserId(),user.getUserName(),user.getEmailId(),user.getMobileNo());
                 rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.PKEY,p);
                 System.out.println("Patient Queue");
                 break;
             case "Doctor":
-                PatientDoctorDTO d=new PatientDoctorDTO(user.getUserId(),user.getEmailId(),user.getMobileNo());
+                PatientDoctorDTO d=new PatientDoctorDTO(user.getUserId(),user.getUserName(),user.getEmailId(),user.getMobileNo());
                 rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.DKEY,d);
                 System.out.println("Doctor Queue");
                 break;
@@ -50,7 +50,7 @@ public class RabbitmqPublisher {
 
         //OTP-Q queue
         OtpDto e= new OtpDto(emailId,otpno);
-        rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.EKEY,e);
+        rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.OTPKEY,e);
 
     }
 

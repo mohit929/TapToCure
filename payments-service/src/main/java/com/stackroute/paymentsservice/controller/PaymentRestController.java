@@ -42,7 +42,10 @@ public class PaymentRestController {
 //	}
 	
 	
-	
+	@GetMapping("/welcome")
+	public String welcome(){
+		return "Welcome tp payment service";
+	}
 	
 	@GetMapping("/createOrderId/{amount}/{receptid}")
 	public  ModelAndView createPaymentOrder(@PathVariable String amount ,@PathVariable String receptid, ModelMap model) {

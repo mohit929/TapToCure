@@ -11,7 +11,7 @@
     <artifactId>appointment-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>appointment-service</name>
-    <description>Demo project for Spring Boot</description>
+    <description>appointment-service module of taptocure application</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -33,6 +33,14 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+            <version>1.18.24</version>
+        </dependency>
+
+        <!-- For log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
         </dependency>
 
         <!-- For JPA Repository : Database methods -->
@@ -48,13 +56,6 @@
             <version>8.0.31</version>
         </dependency>
 
-        <!-- For swagger -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.4</version>
-        </dependency>
-
         <!-- For rabbitMQ -->
         <dependency>
             <groupId>org.springframework.amqp</groupId>
@@ -67,19 +68,11 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
-        <!-- For mockito -->
+        <!-- For swagger -->
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.10.19</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- For log4j -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.4</version>
         </dependency>
 
         <!-- Eureka -->
@@ -120,6 +113,8 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <finalName>appointment-service</finalName>
     </build>
 
 </project>

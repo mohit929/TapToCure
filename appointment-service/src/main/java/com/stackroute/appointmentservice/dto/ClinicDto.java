@@ -11,6 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClinicDto {
-    private String clinicId;
+    private int clinicId;
     private List<Appointment> appointments;
 }

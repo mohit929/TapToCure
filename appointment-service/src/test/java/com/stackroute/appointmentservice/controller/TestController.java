@@ -4,7 +4,6 @@ import com.stackroute.appointmentservice.model.Appointment;
 import com.stackroute.appointmentservice.model.AppointmentStatus;
 import com.stackroute.appointmentservice.model.Patient;
 import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
-import com.stackroute.appointmentservice.repo.PatientRepo;
 import com.stackroute.appointmentservice.service.PatientService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ class TestController {
         Assertions.assertEquals(1, controller.createAppointment(new Appointment(4, "03/11/2023", "02:00", null, null)).getPatientDetails().getPatientId());
 
         // Test for getAvailableAppointment: When 0 bookings are there
-        Assertions.assertNull(controller.findByPatientDetailsAndAppointmentStatus(2, AppointmentStatus.BOOKED));
+        Assertions.assertNull(controller.getAppointment(2, AppointmentStatus.BOOKED));
     }
 
     @Test
@@ -118,20 +117,37 @@ class TestController {
     @Order(10)
     @Test
     void testGetAppointmentByPatientId() {
-        Assertions.assertNotNull(controller.findByPatientDetailsAndAppointmentStatus(2, AppointmentStatus.CANCELLED));
-    }
-
-    @Order(11)
-    @Test
-    void testDummyClinicPublisher() {
-        Assertions.assertNotNull(controller.createDummyClinicAppointment());
+        Assertions.assertNotNull(controller.getAppointment(2, AppointmentStatus.CANCELLED));
     }
 
     @Order(12)
     @Test
-    void addPatientFail()
+    void addPatientFail() {
+        Assertions.assertNotNull(patientService.addPatient(new Patient(1, "Dummy Patient", "dummypatient@dummy.com", "9876543210")));
+    }
+
+    @Order(13)
+    @Test
+    void addPatientPass()
     {
-        Assertions.assertNotNull(patientService.addPatient(new Patient(1,"Dummy Patient","dummypatient@dummy.com","9876543210")));
+        Patient patient =new Patient(5,"Rajani Nandanwal","F",null,null,"9098252470",null,"Khachrod","MP",null,"Body Pain");
+        Assertions.assertNotNull(patientService.addPatient(patient));
+    }
+
+    @Order(14)
+    @Test
+    void testCheckAndUpdatePatientNotUpdated()
+    {
+        Patient patient =new Patient(5,"Rajani Nandanwal","F",null,null,"9098252470",null,"Khachrod","MP",null,"Body Pain");
+        Assertions.assertNotNull(controller.bookAppointment(new Appointment(4, patient )));
+    }
+
+    @Order(15)
+    @Test
+    void testCheckAndUpdatePatientUpdated()
+    {
+        Patient patient =new Patient(5,"Rajani Nandanwal","F",null,null,"+919098252470","rn@","Jabalpur","M.P.","PINCODE","Body Pain");
+        Assertions.assertNotNull(controller.updateAppointment(new Appointment(4, patient )));
     }
 
 }

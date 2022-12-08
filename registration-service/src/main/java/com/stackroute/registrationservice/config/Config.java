@@ -42,7 +42,7 @@ public class Config
 
     @Bean
     public Queue otpQueue(){
-        return new Queue(A_QUEUE);
+        return new Queue(OTP_QUEUE);
     }
     @Bean
     public TopicExchange topicExchange()

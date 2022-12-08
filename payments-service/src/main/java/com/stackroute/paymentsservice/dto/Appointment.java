@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 
 @Component
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Entity(name = "appointment_detail")
 public class Appointment {

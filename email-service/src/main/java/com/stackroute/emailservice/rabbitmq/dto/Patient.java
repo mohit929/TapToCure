@@ -1,4 +1,4 @@
-package com.stackroute.paymentsservice.dto;
+package com.stackroute.emailservice.rabbitmq.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +12,8 @@ import javax.persistence.Id;
 
 @Component
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "patient_detail")
 public class Patient implements Cloneable {
     @Id
@@ -40,27 +42,4 @@ public class Patient implements Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-	public int getPatientId() {
-		return patientId;
-	}
-	public void setPatientId(int patientId) {
-		this.patientId = patientId;
-	}
-	public String getPatientName() {
-		return patientName;
-	}
-	public void setPatientName(String patientName) {
-		this.patientName = patientName;
-	}
-	public Patient() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Patient(int patientId, String patientName) {
-		super();
-		this.patientId = patientId;
-		this.patientName = patientName;
-	}
-    
-    
 }

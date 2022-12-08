@@ -14,10 +14,7 @@ public class AppointmentDto {
     private int appointmentId;
     private String appointmentDate;
     private String appointmentTime;
-
-    // enum reference: for custom status values
-    private AppointmentStatus appointmentStatus = AppointmentStatus.AVAILABLE;
-
+    private String appointmentStatus;
     private Patient patientDetails;
 }
 

@@ -1,18 +1,21 @@
 package com.stackroute.patientservice.controller;
 
+import com.stackroute.patientservice.exception.NoPatientRecordsPresentException;
+import com.stackroute.patientservice.exception.PatientNotFoundException;
 import com.stackroute.patientservice.model.Patient;
+import com.stackroute.patientservice.rabbitmqpublisher.RabbitMqPublisher;
 import com.stackroute.patientservice.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/patientService")
 public class PatientController {
 
+    @Autowired
+    private RabbitMqPublisher rabbitMqPublisher;
     @Autowired
     private PatientService service;
 
@@ -24,33 +27,36 @@ public class PatientController {
     @PostMapping("/registerPatient")
     public String registerPatient(@RequestBody Patient patient){
         try{
-            if(service.isEmailExists(patient.getPatientEmail())){
-                return service.registerPatient(patient);
-            }
-        }catch (Exception e){
+            return service.registerPatient(patient);
+        }catch (Exception e) {
             return e.getMessage();
         }
-
-        return null;
     }
 
-    @PostMapping("/updatePatientDetails")
-    public Patient updatePatientDetails(@RequestBody Patient patient){
+    @PutMapping("/updatePatientDetails")
+    public String updatePatientDetails(@RequestBody Patient patient) throws Exception {
+        String message = null;
+        boolean flag = false;
         try{
-            service.isEmailExists(patient.getPatientEmail());
-        } catch (Exception e) {
-            return service.updatePatientDetails(patient);
+            message =  service.updatePatientDetails(patient);
+        }catch (PatientNotFoundException noPatient){
+            return noPatient.getMessage();
         }
-        return null;
+        return message;
     }
 
     @GetMapping("/getPatientDetails/{patientId}")
-    public Optional<Patient> getPatientDetails(@PathVariable String patientId) throws Exception {
-           return service.getPatientDetails(patientId);
+    public String getPatientDetails(@PathVariable String patientId) throws Exception {
+           try{
+               rabbitMqPublisher.send(service.getPatientDetailsRabbit(patientId));
+               return service.getPatientDetails(patientId);
+           }catch (PatientNotFoundException e){
+               return e.getMessage();
+           }
     }
 
     @GetMapping("/getAllPatientDetails")
-    public List<Patient> getAllPatientDetails(){
+    public List<Patient> getAllPatientDetails() throws NoPatientRecordsPresentException {
         return service.getAllPatientDetails();
     }
 
@@ -58,7 +64,7 @@ public class PatientController {
     public String removePatient(@PathVariable String patientId){
         try{
             return service.deletePatient(patientId);
-        }catch(NoSuchElementException e){
+        } catch (PatientNotFoundException e) {
             return e.getMessage();
         }
     }

@@ -5,7 +5,6 @@ import com.stackroute.appointmentservice.model.AppointmentStatus;
 import com.stackroute.appointmentservice.model.Clinic;
 import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
 import com.stackroute.appointmentservice.service.AppointmentService;
-import com.stackroute.appointmentservice.service.ClinicService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/appointmentservice")
 public class Controller {
-    Logger logger = Logger.getLogger(Comparable.class.getSimpleName());
     @Autowired
     AppointmentService appointmentService;
-    @Autowired
-    ClinicService clinicService;
+
     @Autowired
     Publisher publisher;
 
@@ -42,7 +39,7 @@ public class Controller {
     public Appointment bookAppointment(@RequestBody Appointment appointment) {
         try {
             Appointment a = appointmentService.bookAppointment(appointment);
-            publisher.sendAppointment(a,""+AppointmentStatus.BOOKED);
+            publisher.sendAppointment(a, "" + AppointmentStatus.BOOKED);
             return a;
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,11 +122,14 @@ public class Controller {
         return null;
     }
 
+    // Temporary code: For RabbitMQ Publisher Testing
     @GetMapping("/createDummyClinicAppointment")
-    public Clinic createDummyClinicAppointment()
-    {
-
-        return clinicService.createDummyClinicAppointment();
+    public Clinic createDummyClinicAppointment() {
+        Appointment a1 = new Appointment(13, "01/11/2023", "01:00", null, null);
+        Appointment a2 = new Appointment(14, "02/11/2023", "02:00", null, null);
+        Clinic  clinic = new Clinic("1", List.of(a1, a2));
+        publisher.sendClinic(clinic);
+        return clinic;
     }
 
 }

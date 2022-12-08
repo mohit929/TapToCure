@@ -29,20 +29,23 @@ public class PaymentRestController {
 	@Autowired
 	private PaymentService paymentService;
 	
-	@Autowired
-	private RabbitTemplate template;
+//	@Autowired
+//	private RabbitTemplate template;
 	
 
-	@PostMapping("/publish")
-	public String publishpaymentdetails(@RequestBody PaymentDetailsPOJO paymentdetailspojo) {
+//	@PostMapping("/publish")
+//	public String publishpaymentdetails(@RequestBody PaymentDetailsPOJO paymentdetailspojo) {
+//	
+//		template.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUNTING_KEY, paymentdetailspojo);
+//		return "Details published";
+//		
+//	}
 	
-		template.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUNTING_KEY, paymentdetailspojo);
-		return "Details published";
-		
+	
+	@GetMapping("/welcome")
+	public String welcome(){
+		return "Welcome tp payment service";
 	}
-	
-	
-	
 	
 	@GetMapping("/createOrderId/{amount}/{receptid}")
 	public  ModelAndView createPaymentOrder(@PathVariable String amount ,@PathVariable String receptid, ModelMap model) {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.stackroute.emailservice.model.Email;
 
 @RestController
-@RequestMapping("/email-service")
+@RequestMapping("/email_service")
 public class EmailController {
 
     @Autowired

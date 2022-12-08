@@ -16,7 +16,8 @@ public class MessageConfiguration {
     // new  code
 
     public static final String A_QUEUE = "APPOINTMENT_QUEUE";
-
+    public static final String E_QUEUE = "EMAIL_Q";
+   // public static final String O_QUEUE = "APPOINTMENT_QUEUE";
 
     public static final String A_KEY = "APPOINTMENT_KEY";
 
@@ -32,6 +33,18 @@ public class MessageConfiguration {
 
         return new Queue(A_QUEUE);
     }
+    @Bean
+    public Queue eQueue() {
+        logger.info("queue created: "+E_QUEUE);
+
+        return new Queue(E_QUEUE);
+    }
+//    @Bean
+//    public Queue oQueue() {
+//        logger.info("queue created: "+O_QUEUE);
+//
+//        return new Queue(O_QUEUE);
+//    }
 
 
     @Bean
@@ -52,8 +65,23 @@ public class MessageConfiguration {
                 .to(topicExchange())
                 .with(A_KEY);
     }
-
-
+    @Bean
+    public Binding bindingEQ() {
+        logger.info("binding created: "+A_KEY);
+        return BindingBuilder
+                .bind(aQueue())
+                .to(topicExchange())
+                .with(A_KEY);
+    }
+//    @Bean
+//    public Binding bindingOQ() {
+//        logger.info("binding created: "+A_KEY);
+//        return BindingBuilder
+//                .bind(oQueue())
+//                .to(topicExchange())
+//                .with(A_KEY);
+//    }
+//
 
 
     // we use message converter class because we are playing with the object not with string

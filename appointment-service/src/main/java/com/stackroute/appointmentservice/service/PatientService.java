@@ -1,6 +1,5 @@
 package com.stackroute.appointmentservice.service;
 
-import com.stackroute.appointmentservice.dto.PatientDto;
 import com.stackroute.appointmentservice.model.Patient;
 
 public interface PatientService {
@@ -10,4 +9,5 @@ public interface PatientService {
 
     Patient getPatient(int patientId);
 
+    Patient checkAndUpdatePatient(Patient existingPatient, Patient modifiedPatient);
 }

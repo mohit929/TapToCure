@@ -9,7 +9,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 @SpringBootApplication
 public class AppointmentServiceApplication {
-
     static final Logger logger = Logger.getLogger(AppointmentServiceApplication.class.getSimpleName());
 
     public static void main(String[] args) {

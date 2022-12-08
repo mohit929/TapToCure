@@ -15,23 +15,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 public class UserDTO {
 
-   /* @Id
-    @Field("_id")
-    private String userId;
-    @Field("email_id")
-    private String emailId;
-   *//* @Field("user_name")
-    private String userName;*//*
-    @Field("mobile_no")
-    private String mobileNo;*/
-    /*@Field("password")
-    private String password;
-    @Field("confirm_password")
-    private String confirm_password;
-    @Field("role")
-    private Role role;*/
 
-   private String userId;
+
+    private String userId;
+    private String userName;
     private String emailId;
     private String phoneNo;
 

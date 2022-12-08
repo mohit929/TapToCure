@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/register")
+//@RequestMapping("/register")
 public class UserController {
 
     private int otpno;

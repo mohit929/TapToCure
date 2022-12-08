@@ -40,6 +40,7 @@ public class ClinicService {
 
         }*/
         clinicDetail.setDoctorId(userDTO1.getUserId());
+        clinicDetail.setDoctorName(userDTO1.getUserName());
         clinicDetail.setDoctor_mail(userDTO1.getEmailId());
         clinicDetail.setDoctor_contact(userDTO1.getPhoneNo());
         repository.save(clinicDetail);

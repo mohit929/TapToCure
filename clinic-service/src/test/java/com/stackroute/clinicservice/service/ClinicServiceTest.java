@@ -42,23 +42,23 @@ public class ClinicServiceTest {
     @Test
     public void getClinicServiceTest(){
         when(repository.findAll()).thenReturn(
-                Stream.of(new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,111,"Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist())
-        ,new ClinicDetail(122,"Lifeline","UP","Bareilly","Nh24","11",100,"7:00AM","10:00PM",44,75,111,"Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist())).collect(Collectors.toList()));
+                Stream.of(new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,"111","Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist())
+        ,new ClinicDetail(122,"Lifeline","UP","Bareilly","Nh24","11",100,"7:00AM","10:00PM",44,75,"111","Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist())).collect(Collectors.toList()));
         /*Stream.of(new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,getappointmentlist()),new ClinicDetail(122,"Lifeline","UP","Bareilly","Nh24","11",100,"7:00AM","10:00PM",44,75,getappointmentlist())).collect(Collectors.toList());*/
        assertEquals(2,service.getClinicDetail().size());
     }
     @Test
     public void getClinicDetailByIdTest(){
         int id=133;
-        when(repository.findById(id)).thenReturn(Optional.of(new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,111,"Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist())));
+        when(repository.findById(id)).thenReturn(Optional.of(new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,"111","Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist())));
        /* List<ClinicDetail> clinicDetailOptional=List.of(new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,getappointmentlist()));
         when(repository.findById(id)).thenReturn(Stream.of(clinicDetailOptional))).collect(Collectors.toList());*/
-        ClinicDetail clinicDetail=new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,111,"Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist());
+        ClinicDetail clinicDetail=new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,"111","Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist());
                 assertEquals(clinicDetail,service.searchClinic(id).get());
     }
     @Test
     public void saveClinicTest(){
-        ClinicDetail clinicDetail=new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,111,"Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist());
+        ClinicDetail clinicDetail=new ClinicDetail(111,"Lifeline","UP","Bareilly","Nh24","10",100,"7:00AM","10:00PM",44,75,"111","Dr.MK","ortho","9002778201","abc@gmail.com",getappointmentlist());
         when(repository.save(clinicDetail)).thenReturn(clinicDetail);
         assertEquals("Clinic registered with id :" +clinicDetail.getClinicID(),"Clinic registered with id :" +repository.save(clinicDetail).getClinicID());
     }

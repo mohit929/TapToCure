@@ -17,6 +17,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
@@ -33,9 +35,23 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         log.info("Inside authentication configure method of configuration class");
         http.csrf().disable().cors().disable().authorizeRequests().antMatchers("/authentication_service/generateToken","/swagger-ui/**","/v3/api-docs/**","/authentication_service/welcome"
-                        ,"/v2/api-docs/**","/swagger-resources/**","/webjars/**").permitAll()
+                        ,"/v2/api-docs/**","/swagger-resources/**","/webjars/**","/welcome","/generateToken").permitAll()
                 .anyRequest().authenticated().and().
-                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint((request, response, e) -> {
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    try {
+                        response.getWriter().write(new JSONObject()
+                                .put("timestamp", LocalDateTime.now())
+                                .put("message", "Kindly add valid token starting with bearer")
+                                .toString());
+                    } catch (JSONException jsonException) {
+                        log.error(jsonException.getMessage());
+                    }
+                });
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

@@ -21,7 +21,7 @@ public class QueueListener {
         System.out.println(userDTO);
         if(userDTO!=null)
         {
-            User user=customUserDetailsService.findbyUserEmail(userDTO.getEmail());
+            User user=customUserDetailsService.findbyUserEmail(userDTO.getEmailId());
             if(user!=null)
             {
                user.setPassword(userDTO.getPassword());
@@ -29,8 +29,8 @@ public class QueueListener {
             }
             else{
                 User user1=new User();
-                user1.setUsername(userDTO.getUsername());
-                user1.setEmail(userDTO.getEmail());
+                user1.setUsername(userDTO.getUserName());
+                user1.setEmail(userDTO.getEmailId());
                 user1.setRole(String.valueOf(userDTO.getRole()));
                 user1.setPassword(userDTO.getPassword());
                 customUserDetailsService.save(user1);

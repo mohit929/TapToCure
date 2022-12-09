@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 
 @Component
 @NoArgsConstructor
-
+//@AllArgsConstructor
 @Data
 @Entity(name = "appointment_detail")
 public class Appointment {

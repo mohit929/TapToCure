@@ -54,7 +54,7 @@ public class PatientServiceImpl implements PatientService {
     public Patient checkAndUpdatePatient(Patient existingPatient, Patient modifiedPatient)
     {
         boolean isUpdated = false;
-        existingPatient = patientRapo.findById(existingPatient.getPatientId()).get();
+        //existingPatient = patientRapo.findById(existingPatient.getPatientId()).get();
 
         // checking and updating phone number
         if((existingPatient.getPatientPhoneNumber()==null && modifiedPatient.getPatientPhoneNumber()!=null)

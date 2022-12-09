@@ -5,13 +5,12 @@ import com.stackroute.appointmentservice.model.AppointmentStatus;
 import com.stackroute.appointmentservice.rabbitpublisher.Publisher;
 import com.stackroute.appointmentservice.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/appointmentservice")
+//@RequestMapping("/appointmentservice")
 public class Controller {
     @Autowired
     AppointmentService appointmentService;
@@ -19,7 +18,7 @@ public class Controller {
     @Autowired
     Publisher publisher;
 
-    @GetMapping("/home")
+    @GetMapping("/appointment/home")
     public String home() {
         return "home";
     }
@@ -111,7 +110,7 @@ public class Controller {
         return null;
     }
 
-    @GetMapping("/appointment/available")
+    @GetMapping("/appointment/showAvailable")
     public List<Appointment> getAvailableAppointment() {
         try {
             return appointmentService.getAvailableAppointment();

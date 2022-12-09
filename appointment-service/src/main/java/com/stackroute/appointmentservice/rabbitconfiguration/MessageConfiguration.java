@@ -14,16 +14,15 @@ public class MessageConfiguration {
 
     // QUEUE: Are required to publish and consume the data
     public static final String CLINIC_QUEUE_OF_CLINIC_SERVICE = "Clinic_Q";
-    public static final String PATIENT_QUEUE_OF_REGISTRATION_SERVICE = "Patient_Q";
-    public static final String A_QUEUE = "APPOINTMENT_QUEUE";
     public static final String PATIENT_QUEUE_OF_PATIENT_SERVICE = "PATIENT_QUEUE_OF_PATIENT_SERVICE";
+    public static final String APPOINTMENT_QUEUE= "APPOINTMENT_QUEUE";
 
     // KEYS: are required only to publish the data
-    public static final String A_KEY = "APPOINTMENT_KEY";
+    public static final String APPOINTMENT_KEY = "APPOINTMENT_KEY";
 
 
     // EXCHANGE: are required only to publish the data
-    public static final String EXCHANGE = "EXCHANGE";
+    public static final String APPOINTMENT_EXCHANGE = "APPOINTMENT_EXCHANGE";
 
     // MESSAGES
     private static final String QUEUE_CREATED = "queue created: ";
@@ -31,24 +30,24 @@ public class MessageConfiguration {
     private static final String EXCHANGE_CREATED = "exchange created: ";
 
     @Bean
-    public Queue aQueue() {
-        logger.info(QUEUE_CREATED + A_QUEUE);
-        return new Queue(A_QUEUE);
+    public Queue appointmentQueue() {
+        logger.info(QUEUE_CREATED + APPOINTMENT_QUEUE);
+        return new Queue(APPOINTMENT_QUEUE);
     }
 
     @Bean
     public TopicExchange topicExchange() {
-        logger.info(EXCHANGE_CREATED + EXCHANGE);
-        return new TopicExchange(EXCHANGE);
+        logger.info(EXCHANGE_CREATED + APPOINTMENT_EXCHANGE);
+        return new TopicExchange(APPOINTMENT_EXCHANGE);
     }
 
     @Bean
-    public Binding bindingAQ() {
-        logger.info(BINDING_CREATED + A_KEY);
+    public Binding bindingAppointmentQueue() {
+        logger.info(BINDING_CREATED + APPOINTMENT_KEY);
         return BindingBuilder
-                .bind(aQueue())
+                .bind(appointmentQueue())
                 .to(topicExchange())
-                .with(A_KEY);
+                .with(APPOINTMENT_KEY);
     }
 
     // we use message converter class because we are playing with the object not with string

@@ -30,7 +30,8 @@ public class EmailController {
 
             emailService.sendEmail(emailModel.getMessage(), emailModel.getSubject(), emailModel.getRecipient());
             System.out.println(emailModel);
-            return ResponseEntity.badRequest().body("Invalid Email Address");
+        return ResponseEntity.ok("Done...");
+
 
     }
 

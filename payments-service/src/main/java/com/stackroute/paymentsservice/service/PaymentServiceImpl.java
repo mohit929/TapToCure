@@ -1,5 +1,6 @@
 package com.stackroute.paymentsservice.service;
 import com.stackroute.paymentsservice.entity.PaymentDetailsPOJO;
+import com.stackroute.paymentsservice.rabbitmqdto.Appointment;
 import com.stackroute.paymentsservice.repositry.PaymentRepositry;
 import java.util.Map;
 import org.json.JSONObject;
@@ -18,7 +19,9 @@ public class PaymentServiceImpl implements PaymentService  {
     
 	@Autowired
 	private Environment env;
-
+   
+	
+	private static PaymentDetailsPOJO p=null;
  
 
 //Method for Creating the Order for Payment.
@@ -52,15 +55,12 @@ public class PaymentServiceImpl implements PaymentService  {
 //Method for saving the Payment details in Database.
 	   @Override
 	    public String SavePaymentDetails(Order order) {
-	    	PaymentDetailsPOJO   p= new PaymentDetailsPOJO();
+	        p= new PaymentDetailsPOJO();
 	        p.setRazorOrderId(order.get("id"));
 	        p.setAmount(order.get("amount"));
 	        p.setCurrency(order.get("currency"));
 	        p.setReceiptNumber(order.get("receipt"));
 	        p.setStatus(order.get("status"));
-	        p.setPatientId(1);
-	        p.setPatientName("Need to Enter Patient name");
-	        p.setPatientEmail("Enter Patient Email");
 	        paymentrepo.save(p);
 	        return  "Payment is generated and save in database as well on Razor Server with amount INR"+p.getAmount()/100;
 	    }
@@ -79,6 +79,18 @@ public class PaymentServiceImpl implements PaymentService  {
 		  
 			        
 				
+		}
+
+
+
+//method for getting RabbitMQ message for patient details from Appointment Module
+		@Override
+		public void getAppointment(Appointment appointment) {
+			p=new PaymentDetailsPOJO();
+	        p.setPatientId((appointment.getPatientDetails().getPatientId()));
+	        p.setPatientName(appointment.getPatientDetails().getPatientName());
+	        p.setPatientEmail(appointment.getPatientDetails().getPatientEmail());
+	        paymentrepo.save(p);  
 		}
 		
 	

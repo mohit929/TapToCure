@@ -1,17 +1,11 @@
 package com.stackroute.paymentsservice.controller;
-import com.stackroute.paymentsservice.entity.PaymentDetailsPOJO;
-import com.stackroute.paymentsservice.rabbitmqconfig.RabbitMQConfig;
 import com.stackroute.paymentsservice.service.PaymentService;
-
 import java.util.Map;
-
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.razorpay.Order;
 
-//@RequestMapping("/payment")
+@RequestMapping("/payment")
 @RestController
 public class PaymentRestController {
 	
@@ -29,23 +23,8 @@ public class PaymentRestController {
 	@Autowired
 	private PaymentService paymentService;
 	
-//	@Autowired
-//	private RabbitTemplate template;
-	
 
-//	@PostMapping("/publish")
-//	public String publishpaymentdetails(@RequestBody PaymentDetailsPOJO paymentdetailspojo) {
-//	
-//		template.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUNTING_KEY, paymentdetailspojo);
-//		return "Details published";
-//		
-//	}
-	
-	
-	@GetMapping("/welcome")
-	public String welcome(){
-		return "Welcome tp payment service";
-	}
+	//Getting Amount and ReceiptId for creating the payment order
 	
 	@GetMapping("/createOrderId/{amount}/{receptid}")
 	public  ModelAndView createPaymentOrder(@PathVariable String amount ,@PathVariable String receptid, ModelMap model) {
@@ -90,7 +69,7 @@ public class PaymentRestController {
 	}
 		
 	
-	
+	//After payment done status update is passed to this method to update the current status in database
 	@PutMapping("/update_sucess_order")
 	public String updatedSucessOrder(@RequestBody Map<String ,String> data){
 		paymentService.updateSucessPayment(data);

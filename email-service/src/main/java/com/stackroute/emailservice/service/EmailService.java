@@ -82,6 +82,9 @@
 //}
 package com.stackroute.emailservice.service;
 
+import com.stackroute.emailservice.rabbitmq.dto.Appointment;
+import com.stackroute.emailservice.rabbitmq.dto.EmailDTO;
+import com.stackroute.emailservice.rabbitmq.dto.OtpDto;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -91,7 +94,7 @@ import java.util.Properties;
 
 @Service
 public class EmailService {
-
+  private String welcomeEmail=null;
 	public boolean sendEmail(String message, String subject, String toMailAddress) {
 
 		String from="vikasmonu1490@gmail.com";
@@ -159,5 +162,30 @@ public class EmailService {
 		return messageDelivered;
 
 	}
+	public void consumeEmailDto(EmailDTO emailDTO) {
+		welcomeEmail = emailDTO.getEmailId();
+		String message="Hi "+ emailDTO.getUserName() +" Welcome to tapToCure";
+		String subject="Welcome";
+		sendEmail(message,subject,welcomeEmail);
+	}
+	public void consumeOtpDto(OtpDto otpDto){
+		String emailId=otpDto.getEmailId();
+		String message="Kindly find your otpNo : "+otpDto.getOtpno();
+        String subject="OTP";
+		sendEmail(message,subject,emailId);
+	}
+	public void appintmentDto(Appointment appointment){
+		String message ="Kindly find your appointment detail below :/n"
+				+"appointment Id: "+appointment.getAppointmentId()+"/n"
+				+" appointment date and time: "+appointment.getAppointmentDate() +" " +appointment.getAppointmentTime()+"/n"
+				;
+		String subject ="APPOINTMENT CONFIRMATION DETAILS ";
+		String email=appointment.getPatientDetails().getPatientEmail();
+		sendEmail(message,subject,email);
+
+	}
+
+
+
 
 }

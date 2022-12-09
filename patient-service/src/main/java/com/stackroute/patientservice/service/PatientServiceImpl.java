@@ -27,6 +27,7 @@ public class PatientServiceImpl implements PatientService {
         patient.setPatientId(tempPatient1.getPatientId());
         patient.setPatientEmail(tempPatient1.getPatientEmail());
         patient.setPatientPhoneNumber(tempPatient1.getPatientPhoneNumber());
+        patient.setPatientName(tempPatient1.getPatientName());
         try {
             Optional<Patient> tempPatient = repository.findById(patient.getPatientId());
             if (!tempPatient.isEmpty()) {

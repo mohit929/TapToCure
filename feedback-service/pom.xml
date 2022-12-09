@@ -3,16 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.stackroute</groupId>
+		<artifactId>TapToCure</artifactId>
+		<version>1.0.0</version>
 	</parent>
-	<groupId>com.mongodb</groupId>
-	<artifactId>mongodbconfi</artifactId>
+	<groupId>com.stackroute</groupId>
+	<artifactId>feedback-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mongodbconfi</name>
-	<description>Demo project for payment-service</description>
+	<name>feedback-service</name>
+	<packaging>jar</packaging>
+	<description>This module is help for feedback-service</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -36,6 +36,24 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+	 	 <dependency>
+   <groupId>org.springframework.cloud</groupId>
+   <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+   <version>3.1.4</version>
+</dependency>
+<dependency>
+<groupId>org.springframework.amqp</groupId>
+<artifactId>spring-rabbit-test</artifactId>
+<scope>test</scope>
+</dependency>
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-amqp</artifactId>
+</dependency>
 	</dependencies>
 
 	<build>
@@ -53,6 +71,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>feedback-service</finalName>
 	</build>
 
 </project>

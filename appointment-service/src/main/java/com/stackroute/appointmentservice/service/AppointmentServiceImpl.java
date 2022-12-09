@@ -148,8 +148,9 @@ public class AppointmentServiceImpl implements AppointmentService {
             return cancelAppointment(modifiedAppointment.getAppointmentId());
         }
 
-        // to update the appointmet its status should not be "AVAILABLE"
-        if (existingAppointment.getAppointmentStatus() == AppointmentStatus.AVAILABLE) {
+        // to update the appointmet its status should not be "AVAILABLE" or "CANCELLED"
+        if (existingAppointment.getAppointmentStatus() == AppointmentStatus.AVAILABLE
+                || existingAppointment.getAppointmentStatus() == AppointmentStatus.CANCELLED ) {
             throw new AppointmentNotExistsException("No appointment is booked for this Id: " + existingAppointment.getAppointmentId());
         }
         // updating fields of existing appointment by the fields of modified appointment

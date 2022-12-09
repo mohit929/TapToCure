@@ -24,7 +24,7 @@ public class Consumer {
     consumer method for clinic object published by clinic-service
     it will get the information of appointments and create new empty appointment slots
      */
-    //@RabbitListener(queues = MessageConfiguration.CLINIC_QUEUE_OF_CLINIC_SERVICE)
+    @RabbitListener(queues = MessageConfiguration.CLINIC_QUEUE_OF_CLINIC_SERVICE)
     public void clinicConsumer(ClinicDto clinicDto) {
 
         for (Appointment appointment : clinicDto.getAppointments())
@@ -46,7 +46,7 @@ public class Consumer {
     consumer method for patient object published by registration-service
     it will get the information of newly registered patients and create the copy of those patient
      */
-    //@RabbitListener(queues = MessageConfiguration.PATIENT_QUEUE_OF_PATIENT_SERVICE)
+    @RabbitListener(queues = MessageConfiguration.PATIENT_QUEUE_OF_PATIENT_SERVICE)
     public void patientConsumer(PatientDto patientDto) {
         try {
             Patient patient = new Patient();
@@ -56,7 +56,7 @@ public class Consumer {
             patient.setPatientBloodGroup(patientDto.getPatientBloodGroup());
             patient.setPatientDob(patientDto.getPatientDob());
             patient.setPatientPhoneNumber(patientDto.getPatientPhoneNumber());
-            patient.setPatientEmail(patient.getPatientEmail());
+            patient.setPatientEmail(patientDto.getPatientEmail());
             patient.setCity(patientDto.getCity());
             patient.setState(patientDto.getState());
             patient.setPinCode(patientDto.getPinCode());

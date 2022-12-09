@@ -16,8 +16,13 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Entity(name = "patient_detail")
 public class Patient implements Cloneable {
+    public Patient(int patientId, String patientName) {
+        this.patientId = patientId;
+        this.patientName = patientName;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private int patientId;
     private String patientName;
     private String patientGender;

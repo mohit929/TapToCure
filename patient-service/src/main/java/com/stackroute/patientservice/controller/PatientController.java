@@ -33,11 +33,12 @@ public class PatientController {
         }
     }
 
-    @PutMapping("/updatePatientDetails")
-    public String updatePatientDetails(@RequestBody Patient patient) throws Exception {
+    @PutMapping("/updatePatientDetails/{patient_id}")
+    public String updatePatientDetails(@RequestBody Patient patient,@PathVariable String patient_id) throws Exception {
         String message = null;
         boolean flag = false;
         try{
+            patient.setPatientId(patient_id);
             message =  service.updatePatientDetails(patient);
         }catch (PatientNotFoundException noPatient){
             return noPatient.getMessage();

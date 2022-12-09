@@ -83,6 +83,9 @@ public class PatientServiceImpl implements PatientService {
         } catch (NoSuchElementException e) {
             throw new PatientNotFoundException("PatientDTO with id : " + patient.getPatientId() + " does not exist!!");
         }
+        patient.setPatientName(tempPatient.getPatientName());
+        patient.setPatientEmail(tempPatient.getPatientEmail());
+        patient.setPatientPhoneNumber(tempPatient.getPatientPhoneNumber());
         repository.save(patient);
         return patient.toString();
     }

@@ -28,12 +28,16 @@ public class Appointment {
     @OneToOne
     @JoinColumn(name = "patientId") // name= "primary key of second table"
     @Autowired
-    private Patient patientDetails;
-
-    public Appointment(int appointmentId,Patient patient) {
-        this.appointmentId = appointmentId;
-        this.patientDetails=patient;
+  Patient patientDetails;
+//
+//    public Appointment(int appointmentId,Patient patient) {
+//        this.appointmentId = appointmentId;
+//        this.patientDetails=patient;
+//    }
+    public String patientName(){
+        return this.patientDetails.getPatientName();
     }
+
 
   }
 

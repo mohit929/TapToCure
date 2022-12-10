@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class PatientServiceImpl implements PatientService {
     Logger logger = Logger.getLogger(PatientServiceImpl.class.getSimpleName());
     @Autowired
-    PatientRepo patientRapo;
+    PatientRepo patientRepo;
     @Autowired
     Patient patient;
 
@@ -21,12 +21,12 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public Patient addPatient(Patient patient) {
-        if (!patientRapo.existsById(patient.getPatientId())) {
+        if (!patientRepo.existsById(patient.getPatientId())) {
             logger.info("Creating: New Patient record");
-            return patientRapo.save(patient);
+            return patientRepo.save(patient);
         } else {
             logger.info("Updating: New Patient record");
-            checkAndUpdatePatient(patientRapo.getOne(patient.getPatientId()), patient);
+            checkAndUpdatePatient(patientRepo.getOne(patient.getPatientId()), patient);
         }
         return patient;
     }
@@ -37,7 +37,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public boolean isPatientExists(Patient patient) {
-        return patientRapo.existsById(patient.getPatientId());
+        return patientRepo.existsById(patient.getPatientId());
     }
 
     /*
@@ -45,7 +45,7 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public Patient getPatient(int patientId) {
-        return patientRapo.getOne(patientId);
+        return patientRepo.getOne(patientId);
     }
 
     /*
@@ -115,7 +115,7 @@ public class PatientServiceImpl implements PatientService {
         existingPatient.setPatientSymptoms(modifiedPatient.getPatientSymptoms());
         if (isUpdated) {
             logger.info("Updated: Patient's record in db");
-            return patientRapo.save(existingPatient);
+            return patientRepo.save(existingPatient);
         } else {
             logger.info("Not Updated: Patient's record is already up to date");
             return existingPatient;

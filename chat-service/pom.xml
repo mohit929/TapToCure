@@ -69,13 +69,10 @@
 		<optional>true</optional>
 	</dependency>
 
-		<!-- config server client -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
 	</dependencies>
 
+	<!-- SN: Client dependency management for clients of config-server
+	 	 NO dependency is needed -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -88,6 +85,19 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<!-- SN: Client Repository for clients of config-server
+	 	 NO dependency is needed -->
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -96,5 +106,7 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
 
 </project>

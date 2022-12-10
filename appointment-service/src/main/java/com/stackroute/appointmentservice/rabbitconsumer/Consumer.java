@@ -27,7 +27,7 @@ public class Consumer {
     @RabbitListener(queues = MessageConfiguration.CLINIC_QUEUE_OF_CLINIC_SERVICE)
     public void clinicConsumer(ClinicDto clinicDto) {
 
-        for (Appointment appointment : clinicDto.getAppointments())
+        for (Appointment appointment : clinicDto.getAppointment())
         {
             try
             {

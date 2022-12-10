@@ -43,6 +43,7 @@ public class ClinicService {
         clinicDetail.setDoctorName(userDTO1.getUserName());
         clinicDetail.setDoctor_mail(userDTO1.getEmailId());
         clinicDetail.setDoctor_contact(userDTO1.getPhoneNo());
+        clinicDetail.setTotalSlots(clinicDetail.getAppointment().size());
         repository.save(clinicDetail);
         return "Clinic registered with id :" + clinicDetail.getClinicID();
     }

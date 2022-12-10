@@ -35,8 +35,8 @@ public class ClinicServiceTest {
     //testcase for getclinic
     public List<Appointment> getappointmentlist(){
         List<Appointment> list=new ArrayList<>();
-        list.add(new Appointment("1122","22-12-2022","10:00AM",AppointmentStatus.Available));
-        list.add(new Appointment("1123","22-12-2022","11:00AM",AppointmentStatus.Available));
+        list.add(new Appointment("1122","22-12-2022","10:00AM",AppointmentStatus.AVAILABLE));
+        list.add(new Appointment("1123","22-12-2022","11:00AM",AppointmentStatus.AVAILABLE));
         return list;
     }
     @Test

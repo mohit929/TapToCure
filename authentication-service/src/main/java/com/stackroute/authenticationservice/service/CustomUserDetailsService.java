@@ -64,6 +64,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         AuthenticationResponse authenticationResponse=new AuthenticationResponse();
         authenticationResponse.setToken(token);
+        authenticationResponse.setRole(jwtUtil.extractRole(token));
         return authenticationResponse;
     }
 

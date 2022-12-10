@@ -46,6 +46,7 @@ public class JwtUtil {
                 authenticationRequest.getPassword()
         )){
         Map<String, Object> claims = new HashMap<>();
+        claims.put("Role",userDetails.getAuthorities().toString());
         return createToken(claims, userDetails.getUsername());}
         else {
             throw new InvalidCredentialsException();
@@ -62,6 +63,12 @@ public class JwtUtil {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public String extractRole(String token)
+    {
+        Claims claim = extractAllClaims(token);
+        return (String) claim.get("Role");
     }
 
 }

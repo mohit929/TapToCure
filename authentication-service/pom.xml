@@ -85,7 +85,7 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- config server client -->
+		<!-- SN: client dependency for config-server -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>

@@ -1,5 +1,6 @@
 package com.stackroute.clinicservice.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,14 +39,18 @@ public class ClinicDetail {
     @Field("total_occupied_slots")
     static int totalOccupiedSlots;
     @Field("doctor_id")
+    @Schema(hidden = true)
     private String doctorId;
     @Field("doctor_name")
+    @Schema(hidden = true)
     private String doctorName;
     @Field("specialization")
     private String specialization;
     @Field("doctor_contact")
+    @Schema(hidden = true)
     private String doctor_contact;
     @Field("doctor_mail")
+    @Schema(hidden = true)
     private String doctor_mail;
     @Field("applist")
     private List<Appointment> appointment;

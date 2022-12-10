@@ -4,10 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackroute.authenticationservice.exception.InvalidCredentialsException;
 import com.stackroute.authenticationservice.model.AuthenticationRequest;
+import com.stackroute.authenticationservice.model.AuthenticationResponse;
+import com.stackroute.authenticationservice.service.CustomUserDetailsService;
 import org.junit.Assert;
 import org.junit.function.ThrowingRunnable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -31,10 +36,11 @@ public class AuthenticationControllerTest {
         mockMvc= MockMvcBuilders.standaloneSetup(authenticationController).build();
     }
 
+
     @Test
     public void testAuthenticate() throws Exception {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/generateToken").contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(new AuthenticationRequest("mohit929surya1c@gmail.com", "7477008050"))))
+                        .content(new ObjectMapper().writeValueAsString(new AuthenticationRequest("deepak.suryawanshi@gmail.com", "Deepak@123"))))
                 .andReturn();
         System.out.println(mvcResult.getResponse().getStatus());
         Assert.assertEquals(200, mvcResult.getResponse().getStatus());

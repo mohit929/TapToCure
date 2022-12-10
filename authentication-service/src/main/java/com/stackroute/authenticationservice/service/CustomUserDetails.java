@@ -22,21 +22,18 @@ public class CustomUserDetails implements UserDetails {
         List<GrantedAuthority>authorities=new ArrayList<>();
         authorities.add(simpleGrantedAuthority);
         log.info("Inside the method of getAuthorities() of CustomUserDetails class");
-        log.info("Current User Authority"+authorities);
         return authorities;
     }
 
     @Override
     public String getPassword() {
         log.info("Inside getPassword() method of CustomUserDetails class");
-        log.info("Current user password:"+ user.getPassword());
         return user.getPassword();
     }
 
     @Override
     public String getUsername() {
         log.info("Inside getUserName() method of CustomUserDetails class");
-        log.info("Current user email:"+user.getEmail());
         return user.getEmail();
     }
 

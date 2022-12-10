@@ -21,17 +21,17 @@ public class UserRepositoryTest {
     public void setup()
     {
         expectedUser = new User();
-        expectedUser.setId(101);
-        expectedUser.setUsername("mohit");
-        expectedUser.setRole("doctor");
-        expectedUser.setPassword("7477008050");
-        expectedUser.setEmail("mohit929surya1c@gmail.com");
+        expectedUser.setId(1);
+        expectedUser.setUsername("Deepak Suryawanshi");
+        expectedUser.setRole("Admin");
+        expectedUser.setPassword("Deepak@123");
+        expectedUser.setEmail("deepak.suryawanshi@gmail.com");
     }
 
     @Test
     public void testFindbyUserEmail()
     {
-        User user = userRepository.findbyUserEmail("mohit929surya1c@gmail.com");
+        User user = userRepository.findbyUserEmail("deepak.suryawanshi@gmail.com");
         Assert.assertEquals(expectedUser, user);
     }
 

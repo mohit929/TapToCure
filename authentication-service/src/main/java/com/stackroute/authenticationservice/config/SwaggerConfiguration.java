@@ -43,7 +43,7 @@ public class SwaggerConfiguration {
 
 
     private ApiInfo getInfo() {
-        return new ApiInfo("Authentication-Service","Respective APIs","1.0","","Mohit Suryawanshi","","");
+        return new ApiInfo("Authentication-Service","Kindly generate token and access endpoint's.","1.0","","Mohit Suryawanshi","","");
     }
 
 }

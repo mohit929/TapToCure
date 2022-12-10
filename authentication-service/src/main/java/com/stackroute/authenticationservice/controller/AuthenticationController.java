@@ -14,6 +14,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,51 +24,45 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthenticationController {
-    @Autowired
-    AuthenticationManager authenticationManager;
+
     @Autowired
     CustomUserDetailsService customUserDetailsService;
-    @Autowired
-    JwtUtil jwtUtil;
-    @Autowired
-    RabbitTemplate rabbitTemplate;
-    @Autowired
-    UserRepository userRepository;
+
     @PostMapping(value = "/generateToken")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest)
-    {   String token=null;
+    {   AuthenticationResponse authenticationResponse=null;
         try{
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
-                authenticationRequest.getPassword()));
-        UserDetails userDetails= customUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-        token=jwtUtil.generateToken(userDetails,authenticationRequest);
+            authenticationResponse=customUserDetailsService.generateToken(authenticationRequest);
         }
         catch(BadCredentialsException exception)
         {
             throw new InvalidCredentialsException("Credentials are not correct.Kindly try with another credentials");
         }
-        AuthenticationResponse authenticationResponse=new AuthenticationResponse();
-        authenticationResponse.setToken(token);
         return ResponseEntity.ok(authenticationResponse);
     }
 
     @GetMapping("/doctor")
-    @PreAuthorize("hasAuthority('Doctor')")
-    public  String doctor()
+    @PreAuthorize("hasAnyAuthority('Doctor','Admin')")
+    public  ResponseEntity<?> doctor()
     {
-        return "hi doctor";
+        return ResponseEntity.ok("Welcome Doctor! "+ "\n"+"Disclaimer:If you are doctor or admin then only you can access this endpoint.");
     }
     @GetMapping("/patient")
-    @PreAuthorize("hasAuthority('Patient')")
-    public String patient()
+    @PreAuthorize("hasAnyAuthority('Patient','Admin')")
+    public ResponseEntity<?> patient()
     {
-        return "Hi patient";
+        return ResponseEntity.ok("Welcome Patient! "+ "\n"+"Disclaimer:If you are patient or admin then only you can access this endpoint.");
     }
 
     @GetMapping("/welcome")
-    public String welcome()
+    public ResponseEntity<?> welcome()
     {
-        return "Welcome to Authentication-Service";
+        return ResponseEntity.ok("Welcome to Authentication-Service."+"\n"+"Disclaimer:This endpoint is accessible to all,regardless"
+         +" of any restriction based on role");
     }
+
+
+
+
 
 }

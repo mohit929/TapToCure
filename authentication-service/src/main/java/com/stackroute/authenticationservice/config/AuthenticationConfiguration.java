@@ -34,7 +34,7 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         log.info("Inside authentication configure method of configuration class");
-        http.csrf().disable().cors().disable().authorizeRequests().antMatchers("/authentication_service/generateToken","/swagger-ui/**","/v3/api-docs/**","/authentication_service/welcome"
+        http.csrf().disable().cors().disable().authorizeRequests().antMatchers("/swagger-ui/**","/v3/api-docs/**"
                         ,"/v2/api-docs/**","/swagger-resources/**","/webjars/**","/welcome","/generateToken").permitAll()
                 .anyRequest().authenticated().and().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -46,7 +46,7 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
                     try {
                         response.getWriter().write(new JSONObject()
                                 .put("timestamp", LocalDateTime.now())
-                                .put("message", "Kindly add valid token starting with bearer")
+                                .put("message", "Kindly add valid token starting with Bearer")
                                 .toString());
                     } catch (JSONException jsonException) {
                         log.error(jsonException.getMessage());

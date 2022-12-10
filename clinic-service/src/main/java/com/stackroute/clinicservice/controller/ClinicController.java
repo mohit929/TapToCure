@@ -28,13 +28,6 @@ public class ClinicController {
         private DoctorRepo doctorRepo;
         @PostMapping("/saveclinic")
         public Response saveClinic(@RequestBody ClinicDetail clinicDetail){
-                /*   Optional<UserDTO> doctor= doctorRepo.findById(clinicDetail.getDoctorId());
-                   if(doctor.isPresent()){
-                       clinicDetail.setDoctorId(Integer.parseInt(doctor.get().getUserId()));
-                       *//*clinicDetail.setDoctorName(doctor.get().getUserName());*//*
-                       clinicDetail.setDoctor_mail(doctor.get().getEmailId());
-                       clinicDetail.setDoctor_contact(doctor.get().getPhoneNo());
-                   }*/
                      clinicService.createClinic(clinicDetail);
                      rabbitmqPublisher.send(clinicDetail);
                      return new Response(clinicDetail.getClinicID()+"inserted", Boolean.TRUE);

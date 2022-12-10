@@ -12,10 +12,17 @@ public class Config {
     public static final String P_QUEUE="Patient_Q";
     public static final String EXCHANGE="Patient_Exchange";
     public static final String PKEY="Patient_key";
+    public static final String PATIENT_KEY_OF_PATIENT_SERVICE = "PATIENT_KEY_OF_PATIENT_SERVICE";
+    public static final String PATIENT_QUEUE_OF_PATIENT_SERVICE = "PATIENT_QUEUE_OF_PATIENT_SERVICE";
 
     @Bean
     public Queue pqueue(){
         return new Queue(P_QUEUE);
+    }
+
+    @Bean
+    public Queue patientService(){
+        return new Queue(PATIENT_QUEUE_OF_PATIENT_SERVICE);
     }
     @Bean
     public TopicExchange topicExchange()
@@ -30,6 +37,13 @@ public class Config {
                 .bind(pqueue())
                 .to(topicExchange())
                 .with(PKEY);
+    }
+    @Bean
+    public Binding bindingPatientService(){
+        return BindingBuilder
+                .bind(patientService())
+                .to(topicExchange())
+                .with(PATIENT_KEY_OF_PATIENT_SERVICE);
     }
 
     @Bean

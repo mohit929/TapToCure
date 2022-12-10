@@ -17,7 +17,7 @@ public class RabbitMqPublisher {
         PatientDTO patientDTO = new PatientDTO(patient.getPatientId(),patient.getPatientName(), patient.getPatientGender(),
                 patient.getPatientBloodGroup(), patient.getPatientDob(), patient.getPatientPhoneNumber(), patient.getPatientEmail(),
                 patient.getCity(), patient.getState(), patient.getPinCode(), patient.getPatientSymptoms());
-        rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.PKEY, patientDTO);
+        rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.PATIENT_KEY_OF_PATIENT_SERVICE, patientDTO);
         System.out.println("Patient Queue");
     }
 }

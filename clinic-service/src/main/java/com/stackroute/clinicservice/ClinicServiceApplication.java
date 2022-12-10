@@ -19,7 +19,6 @@ public class ClinicServiceApplication {
 	/*public Docket apis() {
 
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("com.stackroute.paymentsservice.controller")).build();
-
 	}*/
 
 }

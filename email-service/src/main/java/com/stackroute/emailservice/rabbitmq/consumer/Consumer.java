@@ -2,16 +2,13 @@ package com.stackroute.emailservice.rabbitmq.consumer;
 
 
 import com.stackroute.emailservice.rabbitmq.configuration.MessageConfiguration;
-import com.stackroute.emailservice.rabbitmq.dto.Appointment;
+import com.stackroute.emailservice.rabbitmq.dto.AppointmentDto;
 import com.stackroute.emailservice.rabbitmq.dto.EmailDTO;
 import com.stackroute.emailservice.rabbitmq.dto.OtpDto;
 import com.stackroute.emailservice.service.EmailService;
-import org.apache.log4j.Logger;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.text.ParseException;
 
 @Component
 public class Consumer {
@@ -19,7 +16,7 @@ public class Consumer {
     private EmailService emailService;
 
     @RabbitListener(queues = MessageConfiguration.A_QUEUE)
-    public void patientConsumer(Appointment appointment) {
+    public void patientConsumer(AppointmentDto appointment) {
         emailService.appintmentDto(appointment);
 
         System.out.println("Consumed: Appointment "+appointment);

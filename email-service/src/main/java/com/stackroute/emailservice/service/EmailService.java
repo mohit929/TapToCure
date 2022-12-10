@@ -82,7 +82,7 @@
 //}
 package com.stackroute.emailservice.service;
 
-import com.stackroute.emailservice.rabbitmq.dto.Appointment;
+import com.stackroute.emailservice.rabbitmq.dto.AppointmentDto;
 import com.stackroute.emailservice.rabbitmq.dto.EmailDTO;
 import com.stackroute.emailservice.rabbitmq.dto.OtpDto;
 import org.springframework.stereotype.Service;
@@ -174,7 +174,7 @@ public class EmailService {
         String subject="OTP";
 		sendEmail(message,subject,emailId);
 	}
-	public void appintmentDto(Appointment appointment){
+	public void appintmentDto(AppointmentDto appointment){
 		String message ="Kindly find your appointment detail below :/n"
 				+"appointment Id: "+appointment.getAppointmentId()+"/n"
 				+" appointment date and time: "+appointment.getAppointmentDate() +" " +appointment.getAppointmentTime()+"/n"

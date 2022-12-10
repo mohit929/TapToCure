@@ -14,8 +14,9 @@ public class RabbitMQListener {
 	
 	@Autowired
 	private FeedbackService feedbackservice;
-	
-    @RabbitListener(queues="Clinic_Q")
+
+	public static final String CLINIC_QUEUE_FOR_FEEDBACK_SERVICE="CLINIC_QUEUE_FOR_FEEDBACK_SERVICE";
+    @RabbitListener(queues=CLINIC_QUEUE_FOR_FEEDBACK_SERVICE)
 	public void listener(ClinicDetail clinicdetail) {
 	
 		feedbackservice.saveClinicDetails(clinicdetail);

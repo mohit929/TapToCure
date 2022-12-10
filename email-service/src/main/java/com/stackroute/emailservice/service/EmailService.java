@@ -175,9 +175,9 @@ public class EmailService {
 		sendEmail(message,subject,emailId);
 	}
 	public void appintmentDto(AppointmentDto appointment){
-		String message ="Kindly find your appointment detail below :/n"
-				+"appointment Id: "+appointment.getAppointmentId()+"/n"
-				+" appointment date and time: "+appointment.getAppointmentDate() +" " +appointment.getAppointmentTime()+"/n"
+		String message ="Kindly find your appointment detail below :\n"
+				+"appointment Id: "+appointment.getAppointmentId()+"\n"
+				+" appointment date and time: "+appointment.getAppointmentDate() +" " +appointment.getAppointmentTime()+"\n"
 				;
 		String subject ="APPOINTMENT CONFIRMATION DETAILS ";
 		String email=appointment.getPatientDetails().getPatientEmail();

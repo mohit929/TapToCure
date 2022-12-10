@@ -10,6 +10,29 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 
 public class  Config {
+
+    // for feedback service -START
+    public static final String CLINIC_QUEUE_FOR_FEEDBACK_SERVICE="CLINIC_QUEUE_FOR_FEEDBACK_SERVICE";
+    public static final String CLINIC_KEY_FOR_FEEDBACK_SERVICE="CLINIC_KEY_FOR_FEEDBACK_SERVICE";
+    public static final String CLINIC_EXCHANGE_FOR_FEEDBACK_SERVICE="CLINIC_EXCHANGE_FOR_FEEDBACK_SERVICE";
+
+    @Bean
+    public TopicExchange topicExchangeForFeedbackService(){
+        return new TopicExchange(CLINIC_EXCHANGE_FOR_FEEDBACK_SERVICE);
+    }
+    @Bean
+    public Queue clinicQueueForFeedbackService(){
+        System.out.println("clinicQueueForFeedbackService");
+        return new Queue(CLINIC_QUEUE_FOR_FEEDBACK_SERVICE);
+    }
+    @Bean
+    public Binding bindingClinicQueueForFeedbackService(){
+        System.out.println("bindingClinicQueueForFeedbackService");
+        return BindingBuilder.bind(clinicQueueForFeedbackService())
+                .to(topicExchangeForFeedbackService()).with(CLINIC_KEY_FOR_FEEDBACK_SERVICE);
+    }
+    // for feedback service -END
+
     public static final String C_Queue="Clinic_Q";
     public static final String EXCHANGE="Clinic_Exchange";
     public static final String Clinic_Key="Clinic_Key";

@@ -88,6 +88,34 @@ public class Config
                 .to(topicExchange())
                 .with(OTPKEY);
     }
+
+    // Queue creation for payment-service -START
+    public static final String EMAIL_QUEUE_FOR_FEEDBACK_SERVICE = "EMAIL_QUEUE_FOR_FEEDBACK_SERVICE";
+    public static final String EMAIL_EXCHANGE_FOR_FEEDBACK_SERVICE = "EMAIL_EXCHANGE_FOR_FEEDBACK_SERVICE";
+    public static final String EMAIL_KEY_FOR_FEEDBACK_SERVICE = "EMAIL_KEY_FOR_FEEDBACK_SERVICE";
+
+    @Bean
+    public Queue emailQueueForFeedbackService() {
+        System.out.println("QUEUE_CREATED" + EMAIL_QUEUE_FOR_FEEDBACK_SERVICE);
+
+        return new Queue(EMAIL_QUEUE_FOR_FEEDBACK_SERVICE);
+    }
+
+    @Bean
+    public TopicExchange topicExchangeForFeedbackService() {
+        System.out.println("EXCHANGE_CREATED" + EMAIL_EXCHANGE_FOR_FEEDBACK_SERVICE);
+        return new TopicExchange(EMAIL_EXCHANGE_FOR_FEEDBACK_SERVICE);
+    }
+
+    @Bean
+    public Binding bindingAppointmentQueueForPaymentService() {
+        System.out.println("BINDING_CREATED" + EMAIL_KEY_FOR_FEEDBACK_SERVICE);
+        return BindingBuilder
+                .bind(emailQueueForFeedbackService())
+                .to(topicExchangeForFeedbackService())
+                .with(EMAIL_KEY_FOR_FEEDBACK_SERVICE);
+    }
+    // Queue creation for payment-service -END
     @Bean
     public Jackson2JsonMessageConverter converter()
     {

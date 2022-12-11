@@ -37,6 +37,7 @@ public class RabbitmqPublisher {
 
         EmailDTO e= new EmailDTO(user.getEmailId(),user.getUserName());
         rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.EKEY,e);
+        rabbitTemplate.convertAndSend(Config.EMAIL_EXCHANGE_FOR_FEEDBACK_SERVICE,Config.EMAIL_KEY_FOR_FEEDBACK_SERVICE,e);
 
     }
 

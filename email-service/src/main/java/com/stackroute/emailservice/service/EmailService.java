@@ -182,7 +182,6 @@ public class EmailService {
 		String subject ="APPOINTMENT CONFIRMATION DETAILS ";
 		String email=appointment.getPatientDetails().getPatientEmail();
 		sendEmail(message,subject,email);
-
 	}
 
 

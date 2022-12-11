@@ -33,7 +33,12 @@ public class Publisher {
         appointmentDto.setAppointmentStatus(""+appointment.getAppointmentStatus());
         appointmentDto.setPatientDetails(appointment.getPatientDetails());
 
-    template.convertAndSend(MessageConfiguration.APPOINTMENT_EXCHANGE, MessageConfiguration.APPOINTMENT_KEY, appointmentDto);
-        logger.info("Published: " + status + ", Appointment record");
+        // sending data fro email service
+        template.convertAndSend(MessageConfiguration.APPOINTMENT_EXCHANGE, MessageConfiguration.APPOINTMENT_KEY, appointmentDto);
+        logger.info("Published for email-service: " + status + ", Appointment record");
+        // sending data for payment-service
+        template.convertAndSend(MessageConfiguration.APPOINTMENT_EXCHANGE_FOR_PAYMENT_SERVICE, MessageConfiguration.APPOINTMENT_KEY_FOR_PAYMENT_SERVICE, appointmentDto);
+        logger.info("Published for payment-service: " + status + ", Appointment record");
+
     }
 }

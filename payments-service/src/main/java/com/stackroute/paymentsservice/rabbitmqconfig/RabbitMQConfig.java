@@ -16,30 +16,30 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 	
 	
-	
-	public static final String ROUNTING_KEY = "paymennt_rounting_key";
-	public static final String EXCHANGE = "payment_exchange";
-	public static final String QUEUE = "APPOINTMENT_QUEUE";
-
-	@Bean
-	public Queue  queue() {
-		return new Queue (QUEUE);
-	}
-
-	
-	
-	
-	@Bean
-    public TopicExchange  exchange() {	
-		return new TopicExchange(EXCHANGE);
-	}
-	
-	@Bean
-	public Binding binding (Queue queue ,TopicExchange exchange)
-	{
-		
-		return BindingBuilder.bind(queue).to(exchange).with(ROUNTING_KEY);
-	}
+//
+//	public static final String ROUNTING_KEY = "paymennt_rounting_key";
+//	public static final String EXCHANGE = "payment_exchange";
+//	public static final String QUEUE = "APPOINTMENT_QUEUE";
+//
+//	@Bean
+//	public Queue  queue() {
+//		return new Queue (QUEUE);
+//	}
+//
+//
+//
+//
+//	@Bean
+//    public TopicExchange  exchange() {
+//		return new TopicExchange(EXCHANGE);
+//	}
+//
+//	@Bean
+//	public Binding binding (Queue queue ,TopicExchange exchange)
+//	{
+//
+//		return BindingBuilder.bind(queue).to(exchange).with(ROUNTING_KEY);
+//	}
 	
 	@Bean
 	public MessageConverter messageConverter() {

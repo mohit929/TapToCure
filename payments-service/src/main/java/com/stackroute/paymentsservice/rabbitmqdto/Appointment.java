@@ -11,7 +11,7 @@ public class Appointment {
     private String appointmentTime;
 
     // enum reference: for custom status values
-    private AppointmentStatus appointmentStatus = AppointmentStatus.AVAILABLE;
+    private String appointmentStatus;
 
     @OneToOne
     @JoinColumn(name = "patientId") // name= "primary key of second table"
@@ -24,7 +24,7 @@ public class Appointment {
         this.patientDetails = patient;
     }
 
-    public Appointment(int appointmentId, String appointmentDate, String appointmentTime, AppointmentStatus appointmentStatus, Patient patientDetails) {
+    public Appointment(int appointmentId, String appointmentDate, String appointmentTime, String appointmentStatus, Patient patientDetails) {
         this.appointmentId = appointmentId;
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
@@ -56,11 +56,11 @@ public class Appointment {
 		this.appointmentTime = appointmentTime;
 	}
 
-	public AppointmentStatus getAppointmentStatus() {
+	public String getAppointmentStatus() {
 		return appointmentStatus;
 	}
 
-	public void setAppointmentStatus(AppointmentStatus appointmentStatus) {
+	public void setAppointmentStatus(String appointmentStatus) {
 		this.appointmentStatus = appointmentStatus;
 	}
 

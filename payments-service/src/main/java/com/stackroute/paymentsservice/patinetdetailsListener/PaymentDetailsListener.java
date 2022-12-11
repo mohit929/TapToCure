@@ -13,8 +13,10 @@ public class PaymentDetailsListener {
 	
 	@Autowired
 	public PaymentService paymentservice;
+
+	public static final String APPOINTMENT_QUEUE_FOR_PAYMENT_SERVICE= "APPOINTMENT_QUEUE_FOR_PAYMENT_SERVICE";
 	
-	@RabbitListener(queues=RabbitMQConfig.QUEUE)
+	@RabbitListener(queues=APPOINTMENT_QUEUE_FOR_PAYMENT_SERVICE)
 	public void listener(Appointment appointment) {
 	  
 		paymentservice.getAppointment(appointment);

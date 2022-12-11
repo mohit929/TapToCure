@@ -55,12 +55,15 @@ public class PaymentServiceImpl implements PaymentService  {
 //Method for saving the Payment details in Database.
 	   @Override
 	    public String SavePaymentDetails(Order order) {
-	        p= new PaymentDetailsPOJO();
-	        p.setRazorOrderId(order.get("id"));
+		  // p= new PaymentDetailsPOJO();
+		   p = paymentrepo.findByRazorOrderId(lastRecord.getRazorOrderId());
+
+		   	p.setRazorOrderId(order.get("id"));
 	        p.setAmount(order.get("amount"));
 	        p.setCurrency(order.get("currency"));
 	        p.setReceiptNumber(order.get("receipt"));
 	        p.setStatus(order.get("status"));
+
 	        paymentrepo.save(p);
 	        return  "Payment is generated and save in database as well on Razor Server with amount INR"+p.getAmount()/100;
 	    }
@@ -84,13 +87,15 @@ public class PaymentServiceImpl implements PaymentService  {
 
 
 //method for getting RabbitMQ message for patient details from Appointment Module
+
+		static PaymentDetailsPOJO lastRecord= new PaymentDetailsPOJO();
 		@Override
 		public void getAppointment(Appointment appointment) {
 			p=new PaymentDetailsPOJO();
 	        p.setPatientId((appointment.getPatientDetails().getPatientId()));
 	        p.setPatientName(appointment.getPatientDetails().getPatientName());
 	        p.setPatientEmail(appointment.getPatientDetails().getPatientEmail());
-	        paymentrepo.save(p);  
+			lastRecord = paymentrepo.save(p);
 		}
 		
 	

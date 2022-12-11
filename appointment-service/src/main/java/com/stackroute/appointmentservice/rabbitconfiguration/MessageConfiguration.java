@@ -15,6 +15,9 @@ public class MessageConfiguration {
     // QUEUE: Are required to publish and consume the data
     public static final String CLINIC_QUEUE_OF_CLINIC_SERVICE = "Clinic_Q";
     public static final String PATIENT_QUEUE_OF_PATIENT_SERVICE = "PATIENT_QUEUE_OF_PATIENT_SERVICE";
+
+
+
     public static final String APPOINTMENT_QUEUE= "APPOINTMENT_QUEUE";
 
     // KEYS: are required only to publish the data
@@ -34,6 +37,33 @@ public class MessageConfiguration {
         logger.info(QUEUE_CREATED + APPOINTMENT_QUEUE);
         return new Queue(APPOINTMENT_QUEUE);
     }
+
+    // Queue creation for payment-service -START
+    public static final String APPOINTMENT_QUEUE_FOR_PAYMENT_SERVICE= "APPOINTMENT_QUEUE_FOR_PAYMENT_SERVICE";
+    public static final String APPOINTMENT_EXCHANGE_FOR_PAYMENT_SERVICE= "APPOINTMENT_EXCHANGE_FOR_PAYMENT_SERVICE";
+    public static final String APPOINTMENT_KEY_FOR_PAYMENT_SERVICE = "APPOINTMENT_KEY_FOR_PAYMENT_SERVICE";
+
+    @Bean
+    public Queue appointmentQueueForPaymentService() {
+        logger.info(QUEUE_CREATED + APPOINTMENT_QUEUE_FOR_PAYMENT_SERVICE);
+        return new Queue(APPOINTMENT_QUEUE_FOR_PAYMENT_SERVICE);
+    }
+
+    @Bean
+    public TopicExchange topicExchangeForPaymentService() {
+        logger.info(EXCHANGE_CREATED + APPOINTMENT_EXCHANGE_FOR_PAYMENT_SERVICE);
+        return new TopicExchange(APPOINTMENT_EXCHANGE_FOR_PAYMENT_SERVICE);
+    }
+
+    @Bean
+    public Binding bindingAppointmentQueueForPaymentService() {
+        logger.info(BINDING_CREATED + APPOINTMENT_KEY_FOR_PAYMENT_SERVICE);
+        return BindingBuilder
+                .bind(appointmentQueueForPaymentService())
+                .to(topicExchangeForPaymentService())
+                .with(APPOINTMENT_KEY_FOR_PAYMENT_SERVICE);
+    }
+    // Queue creation for payment-service -END
 
     @Bean
     public TopicExchange topicExchange() {

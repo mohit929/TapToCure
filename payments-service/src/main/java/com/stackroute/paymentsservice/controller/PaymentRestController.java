@@ -4,12 +4,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import com.razorpay.Order;
 
@@ -26,8 +21,9 @@ public class PaymentRestController {
 
 	//Getting Amount and ReceiptId for creating the payment order
 	
-	@GetMapping("/createOrderId/{amount}/{receptid}")
-	public  ModelAndView createPaymentOrder(@PathVariable String amount ,@PathVariable String receptid, ModelMap model) {
+	@PostMapping("/createOrderId/{amount}/{receptid}")
+	// public  ModelAndView createPaymentOrder(@PathVariable String amount ,@PathVariable String receptid, ModelMap model) {
+	public  String createPaymentOrder(@PathVariable String amount ,@PathVariable String receptid, ModelMap model) {
 		    String orderId=null;
 		    ModelAndView mav =null;
 		    ModelAndView mav1=null;
@@ -60,11 +56,11 @@ public class PaymentRestController {
 		
 	   
 	   
-	   return mav;
+	   return "Payment has been created:"+orderId;
 	   }else {
 		   model.addAttribute("errormsg", "Incorrct Input please give correct details i.e amount and Receiptid greater than Zero");
 		   mav1=new ModelAndView("incorrect");
-		   return mav1;
+		   return "Enter the correct amount and receipt id";
 	   }
 	}
 		

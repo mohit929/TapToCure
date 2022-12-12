@@ -56,7 +56,7 @@ public class PaymentServiceImpl implements PaymentService  {
 	   @Override
 	    public String SavePaymentDetails(Order order) {
 		  // p= new PaymentDetailsPOJO();
-		   p = paymentrepo.findByRazorOrderId(lastRecord.getRazorOrderId());
+		//   p = paymentrepo.findByRazorOrderId(lastRecord.getRazorOrderId());
 
 		   	p.setRazorOrderId(order.get("id"));
 	        p.setAmount(order.get("amount"));
@@ -95,11 +95,9 @@ public class PaymentServiceImpl implements PaymentService  {
 	        p.setPatientId((appointment.getPatientDetails().getPatientId()));
 	        p.setPatientName(appointment.getPatientDetails().getPatientName());
 	        p.setPatientEmail(appointment.getPatientDetails().getPatientEmail());
-			lastRecord = paymentrepo.save(p);
+			//lastRecord = paymentrepo.save(p);
 		}
 		
-	
-			
-		
+
 
 }

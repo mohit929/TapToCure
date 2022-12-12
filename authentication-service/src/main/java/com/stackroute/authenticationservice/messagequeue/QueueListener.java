@@ -1,5 +1,6 @@
 package com.stackroute.authenticationservice.messagequeue;
 
+import com.stackroute.authenticationservice.config.MessageQueueConfiguration;
 import com.stackroute.authenticationservice.dto.UserDTO;
 import com.stackroute.authenticationservice.model.User;
 import com.stackroute.authenticationservice.service.CustomUserDetailsService;
@@ -18,7 +19,7 @@ public class QueueListener {
 
 
 
-    @RabbitListener(queues = "AUTH_Q")
+    @RabbitListener(queues =MessageQueueConfiguration.AUTH_QUEUE)
     public void receiveFromRegistrationService(UserDTO userDTO) {
         log.info("Message Received from Registration-Service: "+userDTO);
         if(userDTO!=null)

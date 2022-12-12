@@ -17,7 +17,7 @@ public class MessageConfiguration {
 
     public static final String A_QUEUE = "APPOINTMENT_QUEUE";
     public static final String E_QUEUE = "EMAIL_Q";
-    public static final String O_QUEUE = "APPOINTMENT_QUEUE";
+    public static final String O_QUEUE = "OTP_Q";
 
     public static final String A_KEY = "APPOINTMENT_KEY";
 

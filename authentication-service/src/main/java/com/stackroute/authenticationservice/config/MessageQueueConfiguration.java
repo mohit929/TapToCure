@@ -11,27 +11,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MessageQueueConfiguration {
-    public final String EXCHANGE_NAME="Registration_Exchange";
-    public final String AUTH_QUEUE="AUTH_Q";
-    public final String ROUTING_KEY="AUTHENTICATION_KEY";
-//    public final String PATIENT_QUEUE="PATIENT_Q";
 
-    @Bean
-    public Queue queueA() {
-        return new Queue(AUTH_QUEUE,false);
-    }
-
-    @Bean
-    public TopicExchange topicExchange()
-    {
-        return new TopicExchange(EXCHANGE_NAME);
-    }
-
-    @Bean
-    public Binding bindingA(Queue queueA, TopicExchange topicExchange)
-    {
-        return BindingBuilder.bind(queueA).to(topicExchange).with(ROUTING_KEY);
-    }
+    public final static String AUTH_QUEUE="AUTH_Q";
+    public final static String ROUTING_KEY="AUTHENTICATION_KEY";
 
     @Bean
     public MessageConverter messageConverter()

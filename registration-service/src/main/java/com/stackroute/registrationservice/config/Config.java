@@ -37,8 +37,7 @@ public class Config
     }
     @Bean
     public Queue authQueue(){
-        return new Queue(A_QUEUE);
-    }
+        return new Queue(A_QUEUE);}
 
     @Bean
     public Queue otpQueue(){

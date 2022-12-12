@@ -101,6 +101,7 @@ public class UserController {
     @PostMapping("/otp")
     public String sendOTP(@RequestBody String emailId) {
         int response =service.sendOtp(emailId);
+        System.out.println(response);
         otpno=response;
         rabbitmqPublisher.sendOtp(emailId,otpno);
         return "OTP sent to "+emailId+" succesfully";
@@ -119,7 +120,7 @@ public class UserController {
 
             System.out.println(u.getPassword());
             service.createUser(u);
-
+            rabbitmqPublisher.sendToAuthentication(u);
             return ResponseEntity.ok("Done...");
         }
         else

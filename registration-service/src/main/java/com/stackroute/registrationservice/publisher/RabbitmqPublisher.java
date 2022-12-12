@@ -44,7 +44,7 @@ public class RabbitmqPublisher {
     public void sendToAuthentication(User user) {
         UserDTO userDTO=new UserDTO(user.getEmailId(),user.getUserName(),user.getPassword(),user.getRole());
         rabbitTemplate.convertAndSend(Config.EXCHANGE,Config.AUTHKEY,userDTO);
-        System.out.println("Patient Queue");
+        System.out.println("Sending data to authentication-service");
     }
 
     public void sendOtp(String emailId, int otpno) {

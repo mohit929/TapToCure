@@ -2,12 +2,15 @@ package com.stackrout.chatservice.service;
 
 import com.stackrout.chatservice.model.Message;
 
+import java.util.List;
+
 public interface MessageService {
-    Message saveMessage(Message message);
-    Message updateMessage(Message message, long messageId);
+    String saveMessage(Message message);
+    String updateMessage(Message message);
     Message getMessageByMessageId(long messageId);
-    void deleteMessageByMessageId(long messageId);
-    Message replyMessage(Message message, long messageId);
-    Message getMessageByProductId(long productId);
+    String deleteMessageByMessageId(long messageId);
+    Message replyMessage( long messageId);
+    public List<Message> getAllMessage();
+
 
 }

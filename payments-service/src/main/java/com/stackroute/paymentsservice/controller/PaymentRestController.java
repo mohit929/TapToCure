@@ -1,4 +1,5 @@
 package com.stackroute.paymentsservice.controller;
+import com.stackroute.paymentsservice.entity.PaymentDetailsPOJO;
 import com.stackroute.paymentsservice.service.PaymentService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class PaymentRestController {
 	
 	//After payment done status update is passed to this method to update the current status in database
 	@PutMapping("/update_sucess_order")
-	public String updatedSucessOrder(@RequestBody Map<String ,String> data){
+	public String updatedSucessOrder(@RequestBody PaymentDetailsPOJO data){
 		paymentService.updateSucessPayment(data);
 		return "payment transferred succefully and update in database";
 		

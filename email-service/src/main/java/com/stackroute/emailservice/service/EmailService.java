@@ -164,27 +164,38 @@ public class EmailService {
 	}
 	public void consumeEmailDto(EmailDTO emailDTO) {
 		welcomeEmail = emailDTO.getEmailId();
-		String message="Hi "+ emailDTO.getUserName() +" Welcome to tapToCure";
-		String subject="Welcome";
+
+		String subject="Welcome To TapToCure";
+		String message = "Hi "+emailDTO.getUserName()+"!\n\n" +
+				"Welcome to the TapToCure!!\n" +
+				"We are glad that you are reading this email. We will be happy to help you .\n" +
+				"As a thank you for joining us, We would like to give you best service. \n" +
+				"\n" +
+				"\n" +
+				"Thanks and Regards,\n" +
+				"Team TapToCure";
 		sendEmail(message,subject,welcomeEmail);
 	}
 	public void consumeOtpDto(OtpDto otpDto){
 		String emailId=otpDto.getEmailId();
-		String message="Kindly find your otpNo : "+otpDto.getOtpno();
-        String subject="OTP";
+		String subject="OTP from TapToCure";
+		String message="Dear TapToCure user,\n\n" +
+				       "Kindly find your otpNo: "+otpDto.getOtpno()+""+
+						"\n" +
+						"\n" +
+						"Thanks and Regards,\n" +
+						"Team TapToCure";
 		sendEmail(message,subject,emailId);
 	}
 	public void appintmentDto(AppointmentDto appointment){
-		String message ="Kindly find your appointment detail below :\n"
-				+"appointment Id: "+appointment.getAppointmentId()+"\n"
-				+" appointment date and time: "+appointment.getAppointmentDate() +" " +appointment.getAppointmentTime()+"\n"
+		String subject ="Appointment Details";
+		String message ="Dear "+appointment.getPatientDetails().getPatientName()+",\n\n"
+				+"Kindly find your appointment detail below :\n"
+				+"Appointment Id: "+appointment.getAppointmentId()+"\n"
+				+"Date: "+appointment.getAppointmentDate()+"\n"
+				+"Time: "+appointment.getAppointmentTime()+"\n"
 				;
-		String subject ="APPOINTMENT CONFIRMATION DETAILS ";
 		String email=appointment.getPatientDetails().getPatientEmail();
 		sendEmail(message,subject,email);
 	}
-
-
-
-
 }

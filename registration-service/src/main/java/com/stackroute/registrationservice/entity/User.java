@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
-@Document(collection = "User")
+@Document(collection = "user_details")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

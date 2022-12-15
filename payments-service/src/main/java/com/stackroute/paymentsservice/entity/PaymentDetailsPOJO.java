@@ -16,7 +16,7 @@ public class PaymentDetailsPOJO {
     private int patientId;
     private String patientName;
     private String patientEmail;
-    private String razorOrderId;
+      private String razorOrderId;
     private int  amount;
     private String currency;
     private String receiptNumber;

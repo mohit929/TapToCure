@@ -165,35 +165,37 @@ public class AppointmentServiceImpl implements AppointmentService {
         Patient modifiedPatient = modifiedAppointment.getPatientDetails();
 
         // logic to update the patient details in existing appointment
-        if (patientService.isPatientExists(modifiedPatient)) {   // existing patient
-            if (originalPatient.getPatientId() == modifiedPatient.getPatientId()) {
-                logger.info("Existing Patient: Same");
-                // updating patient object by db object records
-                existingPatient = patientService.getPatient(modifiedPatient.getPatientId());
-            } else {
-                logger.info("Existing Patient: Different");
-                // getting patient data from db
-                existingPatient = patientService.getPatient(modifiedPatient.getPatientId());
+        if(modifiedPatient!=null)
+        {
+            if (patientService.isPatientExists(modifiedPatient)) {   // existing patient
+                if (originalPatient.getPatientId() == modifiedPatient.getPatientId()) {
+                    logger.info("Existing Patient: Same");
+                    // updating patient object by db object records
+                    existingPatient = patientService.getPatient(modifiedPatient.getPatientId());
+                } else {
+                    logger.info("Existing Patient: Different");
+                    // getting patient data from db
+                    existingPatient = patientService.getPatient(modifiedPatient.getPatientId());
+                }
+
+                // updating the patient's new details in db
+                existingPatient = patientService.checkAndUpdatePatient(existingPatient, modifiedAppointment.getPatientDetails());
+
+                // updating the patient in modified appointment by db record of original
+                // it will throw CloneNotSupportedException
+                existingAppointment.setPatientDetails((Patient) existingPatient.clone());
+
+            } else {   // new patient
+                logger.info("New Patient");
+                patientRepo.save(modifiedPatient);
+
+                // updating the patient in existing appointment by modified patient
+                // it will throw CloneNotSupportedException
+                existingAppointment.setPatientDetails((Patient) modifiedPatient.clone());
+
+                logger.info("Updated: Patient's record in appointment");
             }
-
-            // updating the patient's new details in db
-            existingPatient = patientService.checkAndUpdatePatient(existingPatient,modifiedAppointment.getPatientDetails());
-
-            // updating the patient in modified appointment by db record of original
-            // it will throw CloneNotSupportedException
-            existingAppointment.setPatientDetails((Patient) existingPatient.clone());
-
-        } else {   // new patient
-            logger.info("New Patient");
-            patientRepo.save(modifiedPatient);
-
-            // updating the patient in existing appointment by modified patient
-            // it will throw CloneNotSupportedException
-            existingAppointment.setPatientDetails((Patient) modifiedPatient.clone());
-
-            logger.info("Updated: Patient's record in appointment");
         }
-
         // updating appointment record in db
         appointmentRepo.save(existingAppointment);
         logger.info("Updated: existingAppointment record");

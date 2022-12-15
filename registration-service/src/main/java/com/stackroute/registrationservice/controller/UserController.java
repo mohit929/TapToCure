@@ -9,16 +9,18 @@ import com.stackroute.registrationservice.rabbitmqResponseDTO.OtpDto;
 import com.stackroute.registrationservice.repo.UserRepo;
 import com.stackroute.registrationservice.entity.User;
 import com.stackroute.registrationservice.service.RegistrationServiceImp;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 //@RequestMapping("/register")
-public class UserController {
+public class    UserController {
 
     private int otpno;
     @Autowired
@@ -34,12 +36,6 @@ public class UserController {
     private RegistrationServiceImp service;
 
 
-    @PostMapping("/publishPatient")
-    public String publishPatient(@RequestBody User user)
-    {
-        rabbitmqPublisher.send(user);
-        return "Successful Published!!";
-    }
     @PostMapping("/save")
     public String saveUser(@RequestBody User user) {
         User r = service.getByemailId(user.getEmailId());
@@ -62,6 +58,17 @@ public class UserController {
         return "User already registered with the given EMAIL-ID";
     }
 
+    @Hidden
+    @ApiIgnore
+    @PostMapping("/publishPatient")
+    public String publishPatient(@RequestBody User user)
+    {
+        rabbitmqPublisher.send(user);
+        return "Successful Published!!";
+    }
+
+
+
     //find all users
     @GetMapping("/getUsers")
     public List<User> getUser(){
@@ -82,6 +89,7 @@ public class UserController {
          return "User Deleted with ID:"+id;
     }
 
+    @Hidden
     //find by email
     @GetMapping("/email")
     public User getByemailId(@RequestParam(value = "email_id") String email_id)
@@ -89,6 +97,8 @@ public class UserController {
         return service.getByemailId(email_id);
     }
 
+    @Hidden
+    @ApiIgnore
     //@RequestMapping(value = "/sendemail", method = RequestMethod.POST)
     @PostMapping("/sendemail")
     public ResponseEntity<?> sendEmail(@RequestBody Email emailModel) {
@@ -109,6 +119,7 @@ public class UserController {
     }
 
     //resetpassword
+
     @PutMapping("/resetpassword")
     public ResponseEntity<?> resetPassword(@RequestBody Reset reset) {
         User u = service.getByemailId(reset.getEmailId());

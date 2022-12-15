@@ -48,8 +48,6 @@ public class RegistrationServiceImp implements RegistrationServices{
             Matcher m =p.matcher(user.getPassword());
 
             result=m.matches();
-
-
         }
        return result;
 

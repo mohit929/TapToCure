@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class TestController {
+class TestController2 {
     @Autowired
     Controller controller;
     @Autowired
@@ -55,10 +55,10 @@ class TestController {
     void testBookAppointment() {
 
 
-        Assertions.assertNotNull(controller.bookAppointment(new Appointment(1, new Patient("Sachin Nandanwal"))));
+        Assertions.assertNotNull(controller.bookAppointment(new Appointment(1, new Patient(2,"Sachin Nandanwal"))));
         Assertions.assertNull(controller.bookAppointment(new Appointment(1, new Patient(2))));
 
-        Assertions.assertNotNull(controller.bookAppointment(new Appointment(2, new Patient("Keerti Nandanwal"))));
+        Assertions.assertNotNull(controller.bookAppointment(new Appointment(2, new Patient(3,"Keerti Nandanwal"))));
         Assertions.assertNull(controller.bookAppointment(new Appointment(2, new Patient(3))));
 
         Assertions.assertNotNull(controller.bookAppointment(new Appointment(3, new Patient(2))));
@@ -148,6 +148,11 @@ class TestController {
     {
         Patient patient =new Patient(5,"Rajani Nandanwal","F",null,null,"+919098252470","rn@","Jabalpur","M.P.","PINCODE","Body Pain");
         Assertions.assertNotNull(controller.updateAppointment(new Appointment(4, patient )));
+
+        patient =new Patient(5,"Sachin Nandanwal","M","O+","25/08/1998","+918982427007","sachin.nandanwal@globallogic.com","Ujjain","MP","UJJAIN_PINCODE","Pain");
+        Assertions.assertNotNull(controller.updateAppointment(new Appointment(4, patient )));
+
+
     }
 
 }

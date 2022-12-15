@@ -73,11 +73,11 @@ public class PaymentServiceImpl implements PaymentService  {
 	   
 //Method for updating payment status in database post payment completed 	   
 		@Override
-		public void updateSucessPayment(Map<String, String> data) {
+		public void updateSucessPayment(PaymentDetailsPOJO data) {
 			 
 				
-	 PaymentDetailsPOJO findByRazorOrderId =paymentrepo.findByRazorOrderId(data.get("RazorOrderId"));
-		findByRazorOrderId.setStatus(data.get("status"));
+	 PaymentDetailsPOJO findByRazorOrderId =paymentrepo.findByRazorOrderId(data.getRazorOrderId());
+		findByRazorOrderId.setStatus(data.getStatus());
 		paymentrepo.save(findByRazorOrderId);
 		  
 			        

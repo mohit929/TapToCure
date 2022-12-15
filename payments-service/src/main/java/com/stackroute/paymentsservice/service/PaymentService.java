@@ -12,7 +12,7 @@ public interface PaymentService {
 	
 	public String SavePaymentDetails(Order order);
 
-	public void updateSucessPayment(Map<String, String> data);
+	public void updateSucessPayment(PaymentDetailsPOJO data);
 
 	public void getAppointment(Appointment appointment);
 	
